@@ -115,7 +115,9 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
           background: "rgba(0, 0, 0, 0.5)",
           color: "white",
           padding: "5px",
-          "border-radius": "20px"
+          "border-radius": "20px",
+          display: "inline-block",
+          "font-size": "15px"
         }}>{item.title}</div>
       ];
 
@@ -136,13 +138,24 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
     );
   });
 
+  const title = "Title of this bingo card";
+
   return (
-    <table style={{"border-collapse": "collapse"}}>
-    {
-      chunkArray(cells, maxRows).map((rowItems) => (
-        <tr>{rowItems}</tr>
-      ))
-    }
+    <table style={{
+      "border-collapse": "collapse",
+      border: "10px solid black"
+    }}>
+      <th style={{
+        "font-weight": "bold",
+        "font-size": "50px"
+      }} colSpan={maxCols}>
+        {title}
+      </th>
+      {
+        chunkArray(cells, maxRows).map((rowItems) => (
+          <tr>{rowItems}</tr>
+        ))
+      }
     </table>
   );
 }
