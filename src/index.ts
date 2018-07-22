@@ -7,6 +7,8 @@ import { view } from "./view";
 const state = (module.hot.data || {}).state as State || initialState;
 const application = app(state, actions(new AniListSearch()), view, document.body);
 
+(window as any).application = application;
+
 if (module.hot) {
   module.hot.dispose(() => {
     module.hot.data.state = application.getState();

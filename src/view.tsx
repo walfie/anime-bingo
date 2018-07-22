@@ -6,26 +6,50 @@ export const view: View<State, Actions> = (state, actions) => (
   <main>
     <form onsubmit={(e) => {
       actions.search.execute();
+      actions.search.setVisibility(true);
       e.preventDefault();
     }}>
       <input
         type="text"
         value={state.search.query}
-        oninput={(e) => actions.search.updateQuery(e.target.value)}
+        onfocus={_ => actions.search.setVisibility(true)}
+        oninput={e => actions.search.updateQuery(e.target.value)}
       />
-      <button>Search</button>
+      <button type="submit">Search</button>
+
+      <button onclick={e => {
+        actions.search.updateQuery("");
+        e.preventDefault();
+      }}>Clear</button>
     </form>
-    <ul>
+    <ul style={{ display: (state.search.isVisible ? "block" : "none") }}>
       {
         state.search.results.map((anime) => {
           return (
-            <li key={anime.id}>
+            <li key={anime.id} onclick={_ => {
+              actions.selections.add(anime);
+              actions.search.setVisibility(false);
+            }}>
               { anime.title }
               <img src={anime.image}/>
             </li>
           );
         })
       }
+    </ul>
+
+    <hr/>
+    Selections:
+    <ul>
+      { state.selections.items.map((anime) => {
+        return (
+          <li key={anime.id}>
+            <button onclick={_ => actions.selections.remove(anime.id)}>delete</button>
+            &nbsp;
+            {anime.title}
+          </li>
+        );
+      })}
     </ul>
   </main>
 );

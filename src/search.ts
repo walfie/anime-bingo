@@ -1,8 +1,4 @@
-export interface Anime {
-  id: number;
-  title: string;
-  image: string;
-};
+import { Anime } from "./models";
 
 export interface Search {
   searchAnime(query: string): Promise<[Anime]>;
@@ -14,6 +10,7 @@ export class AniListSearch implements Search {
    query($page: Int = 1, $perPage: Int = 10, $search: String) {
       Page(page: $page, perPage: $perPage) {
         anime: media(search: $search, sort: SEARCH_MATCH, type: ANIME) {
+          id
           title { romaji }
           coverImage { large }
         }
