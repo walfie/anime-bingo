@@ -1,9 +1,8 @@
-import { h, app, ActionsType, ActionResult, View } from "hyperapp";
-import { Anime, Search, AniListSearch } from "./search";
-import { State, initialState } from "./state";
-import { Actions, actions } from "./actions";
+import { h, View } from "hyperapp";
+import { State } from "./state";
+import { Actions } from "./actions";
 
-const view: View<State, Actions> = (state, actions) => (
+export const view: View<State, Actions> = (state, actions) => (
   <main>
     <form onsubmit={(e) => {
       actions.search.execute();
@@ -30,13 +29,4 @@ const view: View<State, Actions> = (state, actions) => (
     </ul>
   </main>
 );
-
-const state = (module.hot.data || {}).state as State || initialState;
-const application = app(state, actions(new AniListSearch()), view, document.body);
-
-if (module.hot) {
-  module.hot.dispose(() => {
-    module.hot.data.state = application.getState();
-  });
-}
 
