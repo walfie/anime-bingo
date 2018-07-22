@@ -20,7 +20,20 @@ export namespace Actions {
   export interface Selections {
     add: (item: Anime) => (state: State.Selections) => ActionResult<State.Selections>;
     remove: (id: AnimeId) => (state: State.Selections) => ActionResult<State.Selections>;
+    shuffle: () => (state: State.Selections) => ActionResult<State.Selections>;
   }
+}
+
+
+const shuffleArray = <T extends {}>(array: T[]): T[] => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+
+  return array;
 }
 
 export const actions = (search: Search): Actions => ({
@@ -51,6 +64,11 @@ export const actions = (search: Search): Actions => ({
     },
     remove: (id: AnimeId) => (state) => {
       return { items: state.items.filter((item) => item.id != id) };
+    },
+    shuffle: () => (state) => {
+      shuffleArray(state.items);
+      return { items: state.items };
+    }
   }
 });
 

@@ -39,7 +39,8 @@ export const view: View<State, Actions> = (state, actions) => (
     </ul>
 
     <hr/>
-    Selections:
+    Selections
+    <button onclick={_ => actions.selections.shuffle()}>Shuffle</button>
     <ul>
       { state.selections.items.map((anime) => {
         return (
