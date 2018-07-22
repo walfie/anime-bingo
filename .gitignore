@@ -1,0 +1,6 @@
+*.log
+.cache
+dist
+log
+node_modules
+

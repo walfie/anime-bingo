@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
+    "types": ["parcel-env"],
+    "lib": ["es2018", "dom"]
+  }
+}
+
