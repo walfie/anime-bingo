@@ -43,7 +43,8 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
       style = {
         ...style,
         color: state.bingo.backgroundColor,
-        backgroundColor: state.bingo.borderColor
+        backgroundColor: state.bingo.borderColor,
+        verticalAlign: "middle"
       };
 
       inner = [<div class="app-bingo__cell-free">FREE</div>];
@@ -54,7 +55,7 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
 
     return (
       <td class="app-bingo__cell" style={style}>
-        <div class="app-bingo__cell-contents">{inner}</div>
+        {inner}
       </td>
     );
   });

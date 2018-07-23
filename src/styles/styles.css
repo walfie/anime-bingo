@@ -15,21 +15,18 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
+
+  width: 150px;
+  height: 200px;
+  display: table-cell;
+  vertical-align: bottom;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .app-bingo__cell-free {
   font-size: 30px;
-}
-
-.app-bingo__cell-contents {
-  width: 150px;
-  height: 150px;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: center;
-  box-sizing: border-box;
-  padding: 10px;
-  overflow: hidden
 }
 
 .app-bingo__cell-text {
