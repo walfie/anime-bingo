@@ -1,7 +1,7 @@
 import { h, View } from "hyperapp";
 import { State } from "./state";
 import { Actions } from "./actions";
-import { bingoChart } from "./views/bingo";
+import { bingoChart, bingoSettings } from "./views/bingo";
 
 export const view: View<State, Actions> = (state, actions) => (
   <main>
@@ -53,6 +53,11 @@ export const view: View<State, Actions> = (state, actions) => (
         );
       })}
     </ul>
+
+    <hr/>
+    { bingoSettings(state.bingo, actions.bingo) }
+
+    <hr/>
     { bingoChart(state, actions) }
   </main>
 );

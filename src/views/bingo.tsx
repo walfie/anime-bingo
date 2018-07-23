@@ -35,15 +35,20 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
 
     if (item) {
       inner = [<div class="app-bingo__cell-text">{item.title}</div>];
-      style = { backgroundImage: `url(${item.image})` };
+      style = {
+        ...style,
+        backgroundImage: `url(${item.image})`
+      };
     } else if (index == middleIndex) {
       style = {
+        ...style,
         color: state.bingo.backgroundColor,
         backgroundColor: state.bingo.borderColor
       };
 
       inner = [<div class="app-bingo__cell-free">FREE</div>];
     } else {
+      style = { ...style, backgroundColor: state.bingo.backgroundColor };
       inner = [];
     }
 
@@ -54,18 +59,20 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
     );
   });
 
-  const title = "Title of this bingo card";
-
   const tableStyles = {
     borderColor: state.bingo.borderColor,
     backgroundColor: state.bingo.backgroundColor,
     fontFamily: state.bingo.font
   };
 
+  const headerStyles = {
+    color: state.bingo.borderColor
+  };
+
   return (
     <table class="app-bingo__container" style={tableStyles}>
-      <th class="app-bingo__header" colSpan={maxCols}>
-        {title}
+      <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
+        {state.bingo.title}
       </th>
       {
         chunkArray(cells, maxRows).map((rowItems) => (
@@ -76,3 +83,46 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
   );
 }
 
+export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) => (
+  <section>
+    <label for="settingsFont">Font</label>
+    <select
+      name="settingsFont"
+      onchange={(e) => actions.updateState({font: e.target.value})}
+      value={state.font}
+    >
+    {
+      State.Bingo.allFonts.map((font) => (
+        <option value={font}>{font}</option>
+      ))
+    }
+    </select>
+
+    <label for="settingsTitle">Title</label>
+    <input
+      for="settingsTitle"
+      type="text"
+      value={state.title}
+      oninput={(e) => actions.updateState({title: e.target.value})}
+    />
+
+    <label for="settingsBorderColor">Border Color</label>
+    <input
+      for="settingsBorderColor"
+      type="color"
+      value={state.borderColor}
+      onchange={(e) => actions.updateState({borderColor: e.target.value})}
+    />
+
+    <label for="settingsBackgroundColor">Background Color</label>
+    <input
+      for="settingsBackgroundColor"
+      type="color"
+      value={state.backgroundColor}
+      onchange={(e) => actions.updateState({backgroundColor: e.target.value})}
+    />
+
+
+    <button onclick={_ => actions.resetSettings()}>Reset</button>
+  </section>
+);

@@ -26,6 +26,7 @@ export namespace Actions {
 
   export interface Bingo {
     updateState: (newState: Partial<State.Bingo>) => (state: State.Bingo) => ActionResult<State.Bingo>;
+    resetSettings: () => ActionResult<State.Bingo>;
   }
 }
 
@@ -78,6 +79,9 @@ export const actions = (search: Search): Actions => ({
   bingo: {
     updateState: (newState: Partial<State.Bingo>) => (oldState) => {
       return newState;
+    },
+    resetSettings: () => {
+      return State.Bingo.initial;
     }
   }
 });

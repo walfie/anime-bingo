@@ -1,6 +1,6 @@
 .app-bingo__container {
   border-collapse: collapse;
-  border: 10px solid #000;
+  border: 5px solid #000;
 }
 
 .app-bingo__header {
@@ -10,7 +10,7 @@
 }
 
 .app-bingo__cell {
-  border: 8px solid #000;
+  border: 5px solid #000;
   background-color: #fff;
   background-repeat: no-repeat;
   background-size: cover;

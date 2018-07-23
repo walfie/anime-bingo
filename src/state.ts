@@ -19,13 +19,14 @@ export namespace State {
   }
 
   export interface Bingo {
+    title: string,
     font: string,
     backgroundColor: string,
     borderColor: string
   }
 
   export namespace Bingo {
-    export const fonts = [
+    export const allFonts = [
       "Arial, Helvetica, sans-serif",
       "'Arial Black', Gadget, sans-serif",
       "'Comic Sans MS', Textile, cursive",
@@ -44,9 +45,10 @@ export namespace State {
     ];
 
     export const initial = {
-      font: fonts[0],
-      backgroundColor: "#ffffff",
-      borderColor: "#222222"
+      title: "Anime Bingo",
+      font: allFonts[0],
+      backgroundColor: "#fff",
+      borderColor: "#333"
     }
   }
 
