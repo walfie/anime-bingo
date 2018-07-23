@@ -1,6 +1,9 @@
 import { h, View } from "hyperapp";
 import { State } from "../state";
 import { Actions } from "../actions";
+import * as fs from "fs";
+
+const bingoStyles = fs.readFileSync(__dirname + "/../styles/styles.css", "utf-8");
 
 // Break an array up into smaller arrays of fixed size
 const chunkArray = <T extends {}>(array: T[], chunkSize: number): T[][] => {
@@ -71,16 +74,19 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
   };
 
   return (
-    <table class="app-bingo__container" style={tableStyles}>
-      <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
-        {state.bingo.title}
-      </th>
-      {
-        chunkArray(cells, maxRows).map((rowItems) => (
-          <tr>{rowItems}</tr>
-        ))
-      }
-    </table>
+    <div class="js-bingo-container">
+      <style>{bingoStyles}</style>
+      <table class="app-bingo__container" style={tableStyles}>
+        <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
+          {state.bingo.title}
+        </th>
+        {
+          chunkArray(cells, maxRows).map((rowItems) => (
+            <tr>{rowItems}</tr>
+          ))
+        }
+      </table>
+    </div>
   );
 }
 
@@ -125,5 +131,7 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) 
 
 
     <button onclick={_ => actions.resetSettings()}>Reset</button>
+
+    <button onclick={_ => actions.save()}>Save (TODO: PUT THIS BUTTON ELSEWHERE)</button>
   </section>
 );

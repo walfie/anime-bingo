@@ -47,8 +47,8 @@ export namespace State {
     export const initial = {
       title: "Anime Bingo",
       font: allFonts[0],
-      backgroundColor: "#fff",
-      borderColor: "#333"
+      backgroundColor: "#ffffff",
+      borderColor: "#333333"
     }
   }
 

@@ -1,18 +1,21 @@
 {
-  "name": "hyperapp-typescript-example",
+  "name": "anime-bingo",
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/html2canvas": "^0.0.33",
+    "@types/node": "^10.5.2",
     "@types/parcel-env": "^0.0.0",
-    "parcel-bundler": "^1.9.7",
-    "parcel-plugin-typescript": "^1.0.0",
-    "typescript": "^2.9.2",
     "assemble": "~0.3.11",
     "grunt": "~0.4.0",
-    "styles": "^0.2.1"
+    "parcel-bundler": "^1.9.7",
+    "parcel-plugin-typescript": "^1.0.0",
+    "styles": "^0.2.1",
+    "typescript": "^2.9.2"
   },
   "dependencies": {
+    "html2canvas": "^1.0.0-alpha.12",
     "hyperapp": "^1.2.8"
   },
   "scripts": {
