@@ -7,6 +7,7 @@ export interface Actions {
   getState: () => (state: State) => ActionResult<State>;
   search: Actions.Search;
   selections: Actions.Selections;
+  bingo: Actions.Bingo;
 };
 
 export namespace Actions {
@@ -21,6 +22,10 @@ export namespace Actions {
     add: (item: Anime) => (state: State.Selections) => ActionResult<State.Selections>;
     remove: (id: AnimeId) => (state: State.Selections) => ActionResult<State.Selections>;
     shuffle: () => (state: State.Selections) => ActionResult<State.Selections>;
+  }
+
+  export interface Bingo {
+    updateState: (newState: Partial<State.Bingo>) => (state: State.Bingo) => ActionResult<State.Bingo>;
   }
 }
 
@@ -68,6 +73,11 @@ export const actions = (search: Search): Actions => ({
     shuffle: () => (state) => {
       shuffleArray(state.items);
       return { items: state.items };
+    }
+  },
+  bingo: {
+    updateState: (newState: Partial<State.Bingo>) => (oldState) => {
+      return newState;
     }
   }
 });

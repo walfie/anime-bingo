@@ -2,7 +2,8 @@ import { Anime } from "./models";
 
 export interface State {
   search: State.Search,
-  selections: State.Selections
+  selections: State.Selections,
+  bingo: State.Bingo
 };
 
 
@@ -16,6 +17,39 @@ export namespace State {
   export interface Selections {
     items: Anime[]
   }
+
+  export interface Bingo {
+    font: string,
+    backgroundColor: string,
+    borderColor: string
+  }
+
+  export namespace Bingo {
+    export const fonts = [
+      "Arial, Helvetica, sans-serif",
+      "'Arial Black', Gadget, sans-serif",
+      "'Comic Sans MS', Textile, cursive",
+      "'Courier New', Courier, monospace",
+      "Georgia, 'Times New Roman', Times, serif",
+      "Impact, Charcoal, sans-serif",
+      "'Lucida Console', Monaco, monospace",
+      "'Lucida Sans Unicode', 'Lucida Grande', sans-serif",
+      "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
+      "Tahoma, Geneva, sans-serif",
+      "'Times New Roman', Times, serif",
+      "'Trebuchet MS', Helvetica, sans-serif",
+      "Verdana, Geneva, sans-serif",
+      "'MS Sans Serif', Geneva, sans-serif",
+      "'MS Serif', 'New York', serif"
+    ];
+
+    export const initial = {
+      font: fonts[0],
+      backgroundColor: "#ffffff",
+      borderColor: "#222222"
+    }
+  }
+
 }
 
 export const initialState = {
@@ -26,6 +60,7 @@ export const initialState = {
   },
   selections: {
     items: []
-  }
+  },
+  bingo: State.Bingo.initial
 };
 

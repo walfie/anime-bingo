@@ -1,0 +1,43 @@
+.app-bingo__container {
+  border-collapse: collapse;
+  border: 10px solid #000;
+}
+
+.app-bingo__header {
+  font-weight: bold;
+  font-size: 50px;
+  padding: 5px;
+}
+
+.app-bingo__cell {
+  border: 8px solid #000;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50%;
+}
+
+.app-bingo__cell-free {
+  font-size: 30px;
+}
+
+.app-bingo__cell-contents {
+  width: 150px;
+  height: 150px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: hidden
+}
+
+.app-bingo__cell-text {
+  border-radius: 20px;
+  font-size: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: inline-block;
+  padding: 5px;
+}
+
