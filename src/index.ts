@@ -5,7 +5,9 @@ import { actions } from "./actions";
 import { view } from "./view";
 import "./styles/styles.css";
 
-const state = ((module.hot.data || {}).state as State) || initialState;
+const state =
+  (module.hot && module.hot.data && module.hot.data.state) || initialState;
+
 const application = app(
   state,
   actions(new AniListSearch()),
