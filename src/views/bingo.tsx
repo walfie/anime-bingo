@@ -82,7 +82,7 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
         </th>
         {
           chunkArray(cells, maxRows).map((rowItems) => (
-            <tr>{rowItems}</tr>
+            <tr class="app-bingo__row">{rowItems}</tr>
           ))
         }
       </table>
@@ -91,7 +91,9 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
 }
 
 export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) => (
-  <section>
+  <fieldset>
+    <legend>Bingo display settings</legend>
+
     <label for="settingsFont">Font</label>
     <select
       name="settingsFont"
@@ -131,7 +133,5 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) 
 
 
     <button onclick={_ => actions.resetSettings()}>Reset</button>
-
-    <button onclick={_ => actions.save()}>Save (TODO: PUT THIS BUTTON ELSEWHERE)</button>
-  </section>
+  </fieldset>
 );

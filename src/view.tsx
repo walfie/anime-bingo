@@ -23,6 +23,7 @@ export const view: View<State, Actions> = (state, actions) => (
         e.preventDefault();
       }}>Clear</button>
     </form>
+
     <ul style={{ display: (state.search.isVisible ? "block" : "none") }}>
       {
         state.search.results.map((anime) => {
@@ -39,26 +40,31 @@ export const view: View<State, Actions> = (state, actions) => (
       }
     </ul>
 
-    <hr/>
-    Selections
-    <button onclick={_ => actions.selections.shuffle()}>Shuffle</button>
-    <ul>
-      { state.selections.items.map((anime) => {
-        return (
-          <li key={anime.id}>
-            <button onclick={_ => actions.selections.remove(anime.id)}>delete</button>
-            &nbsp;
-            {anime.title}
-          </li>
-        );
-      })}
-    </ul>
+    <fieldset>
+      <legend>Selections</legend>
+      <button onclick={_ => actions.selections.shuffle()}>Shuffle</button>
+      <ul>
+        { state.selections.items.map((anime) => {
+          return (
+            <li key={anime.id}>
+              <button onclick={_ => actions.selections.remove(anime.id)}>delete</button>
+              &nbsp;
+              {anime.title}
+            </li>
+          );
+        })}
+      </ul>
+    </fieldset>
 
-    <hr/>
     { bingoSettings(state.bingo, actions.bingo) }
 
-    <hr/>
     { bingoChart(state, actions) }
+
+    <fieldset>
+      <legend>Output</legend>
+      <button onclick={_ => actions.bingo.generate()}>Generate image</button>
+      <canvas class="js-bingo-output-canvas"/>
+    </fieldset>
   </main>
 );
 

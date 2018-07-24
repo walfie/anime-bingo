@@ -28,7 +28,7 @@ export namespace Actions {
   export interface Bingo {
     updateState: (newState: Partial<State.Bingo>) => (state: State.Bingo) => ActionResult<State.Bingo>;
     resetSettings: () => ActionResult<State.Bingo>;
-    save: () => (state: State.Bingo) => ActionResult<State.Bingo>;
+    generate: () => (state: State.Bingo) => ActionResult<State.Bingo>;
   }
 }
 
@@ -85,70 +85,17 @@ export const actions = (search: Search): Actions => ({
     resetSettings: () => {
       return State.Bingo.initial;
     },
-    save: () => (state) => {
-      const elem = document.querySelector(".js-bingo-container") as HTMLElement;
+    generate: () => (state) => {
+      const input = document.querySelector(".js-bingo-container") as HTMLElement;
+      const output = document.querySelector(".js-bingo-output-canvas") as HTMLElement;
 
-      document.body.appendChild(generate());
-      /*
-      html2canvas(elem, { allowTaint: true }).then((canvas) => {
-        document.body.appendChild(canvas);
+      html2canvas(input, {
+        allowTaint: true,
+        canvas: output
       });
-       */
 
       return state;
     }
   }
 });
 
-function generate() {
-  var table = document.querySelector('.js-bingo-container') as HTMLElement;
-
-  // Sometimes canvas gets cut off at the bottom. TODO
-  //table.style.height = table.offsetHeight + 5 + 'px';
-
-  var canvas = document.createElement('canvas');
-  var ctx = canvas.getContext('2d');
-  canvas.width = table.offsetWidth;
-  canvas.height = table.offsetHeight;
-  canvas.style.maxWidth = '100%';
-
-  var svg = makeSvg(table);
-  var svgString = new XMLSerializer().serializeToString(svg);
-
-  var domUrl = window.URL || (window as any).webkitURL || window;
-  var img = new Image();
-  var svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
-  var url = domUrl.createObjectURL(svgBlob);
-
-  console.log(url);
-  img.crossOrigin = "Anonymous"; // TODO: Figure out tainted canvas
-  img.src = url;
-  img.onload = function () {
-    ctx.drawImage(img, 0, 0);
-    domUrl.revokeObjectURL(url);
-  }
-
-  return canvas;
-}
-
-function makeSvg(content) {
-  var d = document;
-
-  var ns = 'http://www.w3.org/2000/svg';
-
-  var svg = d.createElementNS(ns, 'svg');
-  svg.setAttribute('width', content.offsetWidth);
-  svg.setAttribute('height', content.offsetHeight);
-
-  var fo = d.createElementNS(ns, 'foreignObject');
-  fo.setAttribute('width', '100%');
-  fo.setAttribute('height', '100%');
-  svg.appendChild(fo);
-
-  var div = d.createElement('div');
-  div.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-  div.appendChild(content);
-  fo.appendChild(div);
-
-  return svg;
-}
