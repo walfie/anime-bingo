@@ -4,5 +4,4 @@ export interface Anime {
   id: AnimeId;
   title: string;
   image: string;
-};
-
+}

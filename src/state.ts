@@ -1,28 +1,27 @@
 import { Anime } from "./models";
 
 export interface State {
-  search: State.Search,
-  selections: State.Selections,
-  bingo: State.Bingo
-};
-
+  search: State.Search;
+  selections: State.Selections;
+  bingo: State.Bingo;
+}
 
 export namespace State {
   export interface Search {
-    query: string,
-    results: Anime[],
-    isVisible: boolean
+    query: string;
+    results: Anime[];
+    isVisible: boolean;
   }
 
   export interface Selections {
-    items: Anime[]
+    items: Anime[];
   }
 
   export interface Bingo {
-    title: string,
-    font: string,
-    backgroundColor: string,
-    borderColor: string
+    title: string;
+    font: string;
+    backgroundColor: string;
+    borderColor: string;
   }
 
   export namespace Bingo {
@@ -49,9 +48,8 @@ export namespace State {
       font: allFonts[0],
       backgroundColor: "#ffffff",
       borderColor: "#333333"
-    }
+    };
   }
-
 }
 
 export const initialState = {
@@ -65,4 +63,3 @@ export const initialState = {
   },
   bingo: State.Bingo.initial
 };
-

@@ -2,7 +2,7 @@ import { Anime } from "./models";
 
 export interface Search {
   searchAnime(query: string): Promise<[Anime]>;
-};
+}
 
 export class AniListSearch implements Search {
   private baseUrl = "https://graphql.anilist.co/";
@@ -39,11 +39,10 @@ export class AniListSearch implements Search {
     const json = await result.json();
 
     // TODO: Catch
-    return json.data.Page.anime.map((anime) => ({
+    return json.data.Page.anime.map(anime => ({
       id: anime.id,
       title: anime.title.romaji,
       image: anime.coverImage.large
     }));
   }
-};
-
+}

@@ -5,11 +5,13 @@ import { bingoChart, bingoSettings } from "./views/bingo";
 
 export const view: View<State, Actions> = (state, actions) => (
   <main>
-    <form onsubmit={(e) => {
-      actions.search.execute();
-      actions.search.setVisibility(true);
-      e.preventDefault();
-    }}>
+    <form
+      onsubmit={e => {
+        actions.search.execute();
+        actions.search.setVisibility(true);
+        e.preventDefault();
+      }}
+    >
       <input
         type="text"
         value={state.search.query}
@@ -18,36 +20,43 @@ export const view: View<State, Actions> = (state, actions) => (
       />
       <button type="submit">Search</button>
 
-      <button onclick={e => {
-        actions.search.updateQuery("");
-        e.preventDefault();
-      }}>Clear</button>
+      <button
+        onclick={e => {
+          actions.search.updateQuery("");
+          e.preventDefault();
+        }}
+      >
+        Clear
+      </button>
     </form>
 
-    <ul style={{ display: (state.search.isVisible ? "block" : "none") }}>
-      {
-        state.search.results.map((anime) => {
-          return (
-            <li key={anime.id} onclick={_ => {
+    <ul style={{ display: state.search.isVisible ? "block" : "none" }}>
+      {state.search.results.map(anime => {
+        return (
+          <li
+            key={anime.id}
+            onclick={_ => {
               actions.selections.add(anime);
               actions.search.setVisibility(false);
-            }}>
-              { anime.title }
-              <img src={anime.image}/>
-            </li>
-          );
-        })
-      }
+            }}
+          >
+            {anime.title}
+            <img src={anime.image} />
+          </li>
+        );
+      })}
     </ul>
 
     <fieldset>
       <legend>Selections</legend>
       <button onclick={_ => actions.selections.shuffle()}>Shuffle</button>
       <ul>
-        { state.selections.items.map((anime) => {
+        {state.selections.items.map(anime => {
           return (
             <li key={anime.id}>
-              <button onclick={_ => actions.selections.remove(anime.id)}>delete</button>
+              <button onclick={_ => actions.selections.remove(anime.id)}>
+                delete
+              </button>
               &nbsp;
               {anime.title}
             </li>
@@ -56,15 +65,14 @@ export const view: View<State, Actions> = (state, actions) => (
       </ul>
     </fieldset>
 
-    { bingoSettings(state.bingo, actions.bingo) }
+    {bingoSettings(state.bingo, actions.bingo)}
 
-    { bingoChart(state, actions) }
+    {bingoChart(state, actions)}
 
     <fieldset>
       <legend>Output</legend>
       <button onclick={_ => actions.bingo.generate()}>Generate image</button>
-      <canvas class="js-bingo-output-canvas"/>
+      <canvas class="js-bingo-output-canvas" />
     </fieldset>
   </main>
 );
-

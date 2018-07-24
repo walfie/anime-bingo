@@ -6,11 +6,11 @@ import { Actions } from "../actions";
 const chunkArray = <T extends {}>(array: T[], chunkSize: number): T[][] => {
   let arrays: T[][] = [];
   for (let i = 0; i < array.length; i += chunkSize) {
-    arrays.push(array.slice(i, i + chunkSize))
+    arrays.push(array.slice(i, i + chunkSize));
   }
 
   return arrays;
-}
+};
 
 const maxRows = 5;
 const maxCols = 5;
@@ -19,7 +19,7 @@ const cellHeight = 150;
 const cellPadding = 10;
 
 const maxItems = maxRows * maxCols - 1;
-const middleIndex = Math.floor(maxRows * maxCols / 2);
+const middleIndex = Math.floor((maxRows * maxCols) / 2);
 
 export const bingoChart: View<State, Actions> = (state, actions) => {
   // Take the first x items in the items array
@@ -76,31 +76,28 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
         <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
           {state.bingo.title}
         </th>
-        {
-          chunkArray(cells, maxRows).map((rowItems) => (
-            <tr class="app-bingo__row">{rowItems}</tr>
-          ))
-        }
+        {chunkArray(cells, maxRows).map(rowItems => (
+          <tr class="app-bingo__row">{rowItems}</tr>
+        ))}
       </table>
     </div>
   );
-}
+};
 
-export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) => (
+export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
+  state,
+  actions
+) => (
   <fieldset>
     <legend>Bingo display settings</legend>
 
     <label for="settingsFont">Font</label>
     <select
       name="settingsFont"
-      onchange={(e) => actions.updateState({font: e.target.value})}
+      onchange={e => actions.updateState({ font: e.target.value })}
       value={state.font}
     >
-    {
-      State.Bingo.allFonts.map((font) => (
-        <option value={font}>{font}</option>
-      ))
-    }
+      {State.Bingo.allFonts.map(font => <option value={font}>{font}</option>)}
     </select>
 
     <label for="settingsTitle">Title</label>
@@ -108,7 +105,7 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) 
       for="settingsTitle"
       type="text"
       value={state.title}
-      oninput={(e) => actions.updateState({title: e.target.value})}
+      oninput={e => actions.updateState({ title: e.target.value })}
     />
 
     <label for="settingsBorderColor">Border Color</label>
@@ -116,7 +113,7 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) 
       for="settingsBorderColor"
       type="color"
       value={state.borderColor}
-      onchange={(e) => actions.updateState({borderColor: e.target.value})}
+      onchange={e => actions.updateState({ borderColor: e.target.value })}
     />
 
     <label for="settingsBackgroundColor">Background Color</label>
@@ -124,9 +121,8 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) 
       for="settingsBackgroundColor"
       type="color"
       value={state.backgroundColor}
-      onchange={(e) => actions.updateState({backgroundColor: e.target.value})}
+      onchange={e => actions.updateState({ backgroundColor: e.target.value })}
     />
-
 
     <button onclick={_ => actions.resetSettings()}>Reset</button>
   </fieldset>

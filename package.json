@@ -10,6 +10,7 @@
     "grunt": "~0.4.0",
     "parcel-bundler": "^1.9.7",
     "parcel-plugin-typescript": "^1.0.0",
+    "prettier": "1.13.7",
     "styles": "^0.2.1",
     "typescript": "^2.9.2"
   },
@@ -18,6 +19,8 @@
     "hyperapp": "^1.2.8"
   },
   "scripts": {
-    "start": "./node_modules/parcel-bundler/bin/cli.js src/index.html"
+    "start": "./node_modules/parcel-bundler/bin/cli.js src/index.html",
+    "check": "./node_modules/.bin/tsc --noEmit",
+    "format": "./node_modules/.bin/prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'"
   }
 }
