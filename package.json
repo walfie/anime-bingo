@@ -21,9 +21,9 @@
     "hyperapp": "^1.2.8"
   },
   "scripts": {
-    "start": "./node_modules/parcel-bundler/bin/cli.js src/index.html",
-    "check": "./node_modules/.bin/tsc --noEmit",
-    "format": "./node_modules/.bin/prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'",
-    "precommit": "./node_modules/.bin/pretty-quick --staged"
+    "start": "parcel src/index.html",
+    "check": "tsc --noEmit",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'",
+    "precommit": "pretty-quick --staged"
   }
 }

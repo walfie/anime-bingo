@@ -102,9 +102,7 @@ export const actions = (search: Search): Actions => ({
       return State.Bingo.initial;
     },
     generate: () => state => {
-      const input = document.querySelector(
-        ".js-bingo-container"
-      ) as HTMLElement;
+      const input = document.querySelector(".js-bingo-table") as HTMLElement;
       const output = document.querySelector(
         ".js-bingo-output-canvas"
       ) as HTMLElement;
