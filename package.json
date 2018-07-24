@@ -8,9 +8,11 @@
     "@types/parcel-env": "^0.0.0",
     "assemble": "~0.3.11",
     "grunt": "~0.4.0",
+    "husky": "^0.14.3",
     "parcel-bundler": "^1.9.7",
     "parcel-plugin-typescript": "^1.0.0",
     "prettier": "1.13.7",
+    "pretty-quick": "^1.6.0",
     "styles": "^0.2.1",
     "typescript": "^2.9.2"
   },
@@ -21,6 +23,7 @@
   "scripts": {
     "start": "./node_modules/parcel-bundler/bin/cli.js src/index.html",
     "check": "./node_modules/.bin/tsc --noEmit",
-    "format": "./node_modules/.bin/prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'"
+    "format": "./node_modules/.bin/prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'",
+    "precommit": "./node_modules/.bin/pretty-quick --staged"
   }
 }
