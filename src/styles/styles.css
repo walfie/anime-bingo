@@ -1,12 +1,17 @@
 .app-bingo__container {
-  border-collapse: collapse;
   border: 5px solid #000;
+  border-spacing: 0;
+
+  border-bottom-width: 0;
+  border-right-width: 0;
 }
 
 .app-bingo__header {
   font-weight: bold;
   font-size: 50px;
   padding: 5px;
+  border-bottom: 5px solid;
+  border-right: 5px solid;
 }
 
 .app-bingo__cell {
@@ -23,6 +28,9 @@
   text-align: center;
   box-sizing: border-box;
   padding: 10px;
+
+  border-top-width: 0;
+  border-left-width: 0;
 }
 
 .app-bingo__cell-free {

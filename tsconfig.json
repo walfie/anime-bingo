@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "jsxFactory": "h",
-    "types": ["parcel-env"],
+    "types": ["parcel-env", "html2canvas"],
     "lib": ["es2018", "dom"]
   }
 }

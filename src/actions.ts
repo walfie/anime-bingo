@@ -2,6 +2,7 @@ import { h, app, ActionsType, ActionResult, View } from "hyperapp";
 import { Search, AniListSearch } from "./search";
 import { State } from "./state";
 import { AnimeId, Anime } from "./models";
+import * as html2canvas from "html2canvas";
 
 export interface Actions {
   getState: () => (state: State) => ActionResult<State>;
@@ -27,6 +28,7 @@ export namespace Actions {
   export interface Bingo {
     updateState: (newState: Partial<State.Bingo>) => (state: State.Bingo) => ActionResult<State.Bingo>;
     resetSettings: () => ActionResult<State.Bingo>;
+    generate: () => (state: State.Bingo) => ActionResult<State.Bingo>;
   }
 }
 
@@ -82,6 +84,17 @@ export const actions = (search: Search): Actions => ({
     },
     resetSettings: () => {
       return State.Bingo.initial;
+    },
+    generate: () => (state) => {
+      const input = document.querySelector(".js-bingo-container") as HTMLElement;
+      const output = document.querySelector(".js-bingo-output-canvas") as HTMLElement;
+
+      html2canvas(input, {
+        allowTaint: true,
+        canvas: output
+      });
+
+      return state;
     }
   }
 });

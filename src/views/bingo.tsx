@@ -71,21 +71,25 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
   };
 
   return (
-    <table class="app-bingo__container" style={tableStyles}>
-      <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
-        {state.bingo.title}
-      </th>
-      {
-        chunkArray(cells, maxRows).map((rowItems) => (
-          <tr>{rowItems}</tr>
-        ))
-      }
-    </table>
+    <div class="js-bingo-container">
+      <table class="app-bingo__container" style={tableStyles}>
+        <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
+          {state.bingo.title}
+        </th>
+        {
+          chunkArray(cells, maxRows).map((rowItems) => (
+            <tr class="app-bingo__row">{rowItems}</tr>
+          ))
+        }
+      </table>
+    </div>
   );
 }
 
 export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) => (
-  <section>
+  <fieldset>
+    <legend>Bingo display settings</legend>
+
     <label for="settingsFont">Font</label>
     <select
       name="settingsFont"
@@ -125,5 +129,5 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (state, actions) 
 
 
     <button onclick={_ => actions.resetSettings()}>Reset</button>
-  </section>
+  </fieldset>
 );
