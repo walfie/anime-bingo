@@ -78,6 +78,19 @@ body {
   align-self: center;
 }
 
+.app-selections {
+  padding-left: 20px;
+}
+
+.app-selections__media {
+  display: flex;
+  padding-bottom: 5px;
+}
+
+.app-selections__media-title {
+  flex: 1;
+}
+
 .app-bingo {
   padding: 10px;
   text-align: center;

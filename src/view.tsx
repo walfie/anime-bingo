@@ -113,26 +113,29 @@ export const selections: View<State.Selections, Actions.Selections> = (
     ) : (
       <div>No items selected.</div>
     )}
-    <ol>
+    <ol class="app-selections">
       {state.items.map(media => {
         return (
           <li key={media.id}>
-            <input
-              value={media.overriddenTitle}
-              placeholder={media.title}
-              oninput={e =>
-                actions.commitEdit({ id: media.id, title: e.target.value })
-              }
-            />
-            <button onclick={_ => actions.remove(media.id)}>Remove</button>
-            <button
-              style={{
-                display: media.overriddenTitle ? "inline" : "none"
-              }}
-              onclick={_ => actions.commitEdit({ id: media.id, title: null })}
-            >
-              Reset title
-            </button>
+            <div class="app-selections__media">
+              <input
+                class="app-selections__media-title"
+                value={media.overriddenTitle}
+                placeholder={media.title}
+                oninput={e =>
+                  actions.commitEdit({ id: media.id, title: e.target.value })
+                }
+              />
+              <button
+                style={{
+                  display: media.overriddenTitle ? "inline" : "none"
+                }}
+                onclick={_ => actions.commitEdit({ id: media.id, title: null })}
+              >
+                Reset title
+              </button>
+              <button onclick={_ => actions.remove(media.id)}>Remove</button>
+            </div>
           </li>
         );
       })}
