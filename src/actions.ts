@@ -4,6 +4,15 @@ import { State } from "./state";
 import { MediaId, Media } from "./models";
 import * as html2canvas from "html2canvas";
 
+const storageKey = "selections";
+const saveSelectionsToStorage = (selections: State.Selections) => {
+  localStorage.setItem(storageKey, JSON.stringify(selections));
+};
+export const loadSelelectionsFromStorage = (): State.Selections => {
+  // TODO: Versioning
+  return JSON.parse(localStorage.getItem(storageKey)) as State.Selections;
+};
+
 export interface Actions {
   getState: () => (state: State) => ActionResult<State>;
   search: Actions.Search;
@@ -32,17 +41,39 @@ export namespace Actions {
   }
 
   export interface Selections {
+    persistState: () => (
+      state: State.Selections
+    ) => ActionResult<State.Selections>;
+    loadState: () => ActionResult<State.Selections>;
+    updateState: (
+      newState: Partial<State.Selections>
+    ) => ActionResult<State.Selections>;
     add: (
       item: Media
-    ) => (state: State.Selections) => ActionResult<State.Selections>;
+    ) => (
+      state: State.Selections,
+      actions: Actions.Selections
+    ) => ActionResult<State.Selections>;
     remove: (
       id: MediaId
-    ) => (state: State.Selections) => ActionResult<State.Selections>;
-    removeAll: () => ActionResult<State.Selections>;
-    shuffle: () => (state: State.Selections) => ActionResult<State.Selections>;
+    ) => (
+      state: State.Selections,
+      actions: Actions.Selections
+    ) => ActionResult<State.Selections>;
+    removeAll: () => (
+      state: State.Selections,
+      actions: Actions.Selections
+    ) => ActionResult<State.Selections>;
+    shuffle: () => (
+      state: State.Selections,
+      actions: Actions.Selections
+    ) => ActionResult<State.Selections>;
     commitEdit: (
       _: { id: MediaId; title: string }
-    ) => (state: State.Selections) => ActionResult<State.Selections>;
+    ) => (
+      state: State.Selections,
+      actions: Actions.Selections
+    ) => ActionResult<State.Selections>;
   }
 
   export interface Bingo {
@@ -95,35 +126,49 @@ export const actions = (search: Search): Actions => ({
     }
   },
   selections: {
-    add: (item: Media) => state => {
+    updateState: newState => {
+      return newState;
+    },
+    persistState: () => state => {
+      saveSelectionsToStorage(state);
+    },
+    loadState: () => {
+      return loadSelelectionsFromStorage();
+    },
+    add: (item: Media) => (state, actions) => {
       // If item already exists, don't add it again
       const items = state.items.find(existing => existing.id == item.id)
         ? state.items
         : state.items.concat(item);
 
-      return { items };
+      actions.updateState({ items });
+      actions.persistState();
     },
-    remove: (id: MediaId) => state => {
-      return { items: state.items.filter(item => item.id != id) };
+    remove: (id: MediaId) => (state, actions) => {
+      actions.updateState({ items: state.items.filter(item => item.id != id) });
+      actions.persistState();
     },
-    removeAll: () => {
+    removeAll: () => (state, actions) => {
       if (confirm("Remove all items?")) {
-        return { items: [] };
+        actions.updateState({ items: [] });
       } else {
-        return {};
+        actions.updateState({});
       }
+      actions.persistState();
     },
-    shuffle: () => state => {
+    shuffle: () => (state, actions) => {
       shuffleArray(state.items);
-      return { items: state.items };
+      actions.updateState({ items: state.items });
+      actions.persistState();
     },
-    commitEdit: ({ id, title }) => state => {
+    commitEdit: ({ id, title }) => (state, actions) => {
       state.items.forEach(item => {
         if (item.id == id) {
           item.overriddenTitle = title;
         }
       });
-      return { items: state.items };
+      actions.updateState({ items: state.items });
+      actions.persistState();
     }
   },
   bingo: {

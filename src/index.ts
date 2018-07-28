@@ -15,6 +15,8 @@ const application = app(
   document.body
 );
 
+application.selections.loadState();
+
 (window as any).application = application;
 
 if (module.hot) {
