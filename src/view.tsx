@@ -5,19 +5,26 @@ import { bingoChart, bingoSettings } from "./views/bingo";
 
 export const view: View<State, Actions> = (state, actions) => (
   <main class="app-root">
-    {searchForm(state.search, actions.search)}
-    {searchResults(state, actions)}
-    {selections(state.selections, actions.selections)}
+    <section class="app-search">
+      <fieldset>
+        <legend>Search</legend>
+        {searchForm(state.search, actions.search)}
+        {searchResults(state, actions)}
+      </fieldset>
+      {selections(state.selections, actions.selections)}
+    </section>
 
-    {bingoSettings(state.bingo, actions.bingo)}
+    <section class="app-bingo">
+      {bingoSettings(state.bingo, actions.bingo)}
 
-    {bingoChart(state, actions)}
+      {bingoChart(state, actions)}
 
-    <fieldset>
-      <legend>Output</legend>
-      <button onclick={_ => actions.bingo.generate()}>Generate image</button>
-      <canvas class="js-bingo-output-canvas" />
-    </fieldset>
+      <fieldset>
+        <legend>Output</legend>
+        <button onclick={_ => actions.bingo.generate()}>Generate image</button>
+        <canvas class="js-bingo-output-canvas" />
+      </fieldset>
+    </section>
   </main>
 );
 
@@ -26,6 +33,7 @@ export const searchForm: View<State.Search, Actions.Search> = (
   actions
 ) => (
   <form
+    class="app-search__form"
     onsubmit={e => {
       actions.execute();
       actions.setVisibility(true);
@@ -34,13 +42,18 @@ export const searchForm: View<State.Search, Actions.Search> = (
   >
     <input
       type="text"
+      class="app-search__form_input"
+      placeholder="Search by title"
       value={state.query}
       onfocus={_ => actions.setVisibility(true)}
       oninput={e => actions.updateQuery(e.target.value)}
     />
-    <button type="submit">Search</button>
+    <button class="app-search__form_button" type="submit">
+      Search
+    </button>
 
     <button
+      class="app-search__form_button"
       onclick={e => {
         actions.updateQuery("");
         e.preventDefault();
@@ -52,18 +65,22 @@ export const searchForm: View<State.Search, Actions.Search> = (
 );
 
 export const searchResults: View<State, Actions> = (state, actions) => (
-  <ul style={{ display: state.search.isVisible ? "block" : "none" }}>
+  <ul
+    class="app-search__results"
+    style={{ display: state.search.isVisible ? "block" : "none" }}
+  >
     {state.search.results.map(anime => {
       return (
         <li
+          class="app-search__result"
           key={anime.id}
           onclick={_ => {
             actions.selections.add(anime);
             actions.search.setVisibility(false);
           }}
         >
-          {anime.title}
-          <img src={anime.image} />
+          <img class="app-search__result-image" src={anime.image} />
+          <span class="app-search__result-title">{anime.title}</span>
         </li>
       );
     })}

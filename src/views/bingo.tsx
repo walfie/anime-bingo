@@ -91,38 +91,45 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
   <fieldset>
     <legend>Bingo display settings</legend>
 
-    <label for="settingsFont">Font</label>
-    <select
-      name="settingsFont"
-      onchange={e => actions.updateState({ font: e.target.value })}
-      value={state.font}
-    >
-      {State.Bingo.allFonts.map(font => <option value={font}>{font}</option>)}
-    </select>
+    <label>
+      Font
+      <select
+        onchange={e => actions.updateState({ font: e.target.value })}
+        value={state.font}
+      >
+        {State.Bingo.allFonts.map(font => <option value={font}>{font}</option>)}
+      </select>
+    </label>
 
-    <label for="settingsTitle">Title</label>
-    <input
-      for="settingsTitle"
-      type="text"
-      value={state.title}
-      oninput={e => actions.updateState({ title: e.target.value })}
-    />
+    <label>
+      Title
+      <input
+        for="settingsTitle"
+        type="text"
+        value={state.title}
+        oninput={e => actions.updateState({ title: e.target.value })}
+      />
+    </label>
 
-    <label for="settingsBorderColor">Border Color</label>
-    <input
-      for="settingsBorderColor"
-      type="color"
-      value={state.borderColor}
-      onchange={e => actions.updateState({ borderColor: e.target.value })}
-    />
+    <label>
+      Border Color
+      <input
+        for="settingsBorderColor"
+        type="color"
+        value={state.borderColor}
+        onchange={e => actions.updateState({ borderColor: e.target.value })}
+      />
+    </label>
 
-    <label for="settingsBackgroundColor">Background Color</label>
-    <input
-      for="settingsBackgroundColor"
-      type="color"
-      value={state.backgroundColor}
-      onchange={e => actions.updateState({ backgroundColor: e.target.value })}
-    />
+    <label>
+      Background Color
+      <input
+        for="settingsBackgroundColor"
+        type="color"
+        value={state.backgroundColor}
+        onchange={e => actions.updateState({ backgroundColor: e.target.value })}
+      />
+    </label>
 
     <button onclick={_ => actions.resetSettings()}>Reset</button>
   </fieldset>
