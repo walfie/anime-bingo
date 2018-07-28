@@ -2,6 +2,7 @@ import { h, View } from "hyperapp";
 import { State } from "./state";
 import { Actions } from "./actions";
 import { bingoChart, bingoSettings } from "./views/bingo";
+import { MediaType } from "./models";
 
 export const view: View<State, Actions> = (state, actions) => (
   <main class="app-root">
@@ -54,32 +55,34 @@ export const searchForm: View<State.Search, Actions.Search> = (
     class="app-search__form"
     onsubmit={e => {
       actions.execute();
-      actions.setVisibility(true);
       e.preventDefault();
     }}
   >
+    <select
+      class="app-search__form-media"
+      onchange={e => {
+        actions.updateState({ mediaType: e.target.value });
+        state.query && actions.execute();
+      }}
+    >
+      {["anime", "manga"].map((mediaType: MediaType) => (
+        <option value={mediaType} selected={state.mediaType == mediaType}>
+          {mediaType}
+        </option>
+      ))}
+    </select>
+
     <input
       type="text"
-      class="app-search__form_input"
+      class="app-search__form-input"
       placeholder="Search by title"
       value={state.query}
       onfocus={_ => actions.setVisibility(true)}
       oninput={e => actions.updateQuery(e.target.value)}
     />
-    <button class="app-search__form_button" type="submit">
-      {state.isLoading ? " \u23F3" : "Search"}
-    </button>
 
-    <button
-      class="app-search__form_button"
-      onclick={e => {
-        actions.updateQuery("");
-        actions.updateMatches([]);
-        actions.setVisibility(false);
-        e.preventDefault();
-      }}
-    >
-      Clear
+    <button class="app-search__form-button" type="submit">
+      {state.isLoading ? " \u23F3" : "Search"}
     </button>
   </form>
 );

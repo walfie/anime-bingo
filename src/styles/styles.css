@@ -40,16 +40,21 @@ body {
   padding-bottom: 10px;
 }
 
-.app-search__form_input {
+.app-search__form-input {
   flex: 1;
   font-size: 20px;
   vertical-align: middle;
 }
 
-.app-search__form_button {
+.app-search__form-button {
   margin-left: 5px;
   font-size: 18px;
   width: 60px;
+}
+
+.app-search__form-media {
+  margin-right: 5px;
+  font-size: 16px;
 }
 
 .app-search__results {

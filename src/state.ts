@@ -1,4 +1,4 @@
-import { Media, MediaId } from "./models";
+import { Media, MediaId, MediaType } from "./models";
 
 export interface State {
   search: State.Search;
@@ -9,6 +9,7 @@ export interface State {
 export namespace State {
   export interface Search {
     query: string;
+    mediaType: MediaType;
     results: Media[];
     isVisible: boolean;
     isLoading: boolean;
@@ -64,6 +65,7 @@ export const initialState: State = {
   search: {
     query: "",
     results: [],
+    mediaType: "anime",
     isVisible: false,
     isLoading: false,
     error: null

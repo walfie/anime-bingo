@@ -1,4 +1,6 @@
-export type MediaId = number;
+export type MediaId = string;
+
+export type MediaType = "anime" | "manga";
 
 export interface Media {
   id: MediaId;

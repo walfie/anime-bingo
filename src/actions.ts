@@ -122,8 +122,12 @@ export const actions = (search: Search): Actions => ({
     execute: () => async (state, actions) => {
       actions.updateState({ isLoading: true, error: null });
       try {
-        const searchResults = await search.searchMedia(state.query);
+        const searchResults = await search.searchMedia(
+          state.query,
+          state.mediaType
+        );
         actions.updateMatches(searchResults);
+        actions.setVisibility(true);
       } catch (err) {
         actions.updateState({ error: err.toString() });
       } finally {

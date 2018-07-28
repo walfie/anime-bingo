@@ -1,15 +1,15 @@
-import { Media } from "./models";
+import { Media, MediaType } from "./models";
 
 export interface Search {
-  searchMedia(query: string): Promise<[Media]>;
+  searchMedia(query: string, mediaType: MediaType): Promise<[Media]>;
 }
 
 export class AniListSearch implements Search {
   private baseUrl = "https://graphql.anilist.co";
-  private animeQuery: string = `
-   query($page: Int = 1, $perPage: Int = 10, $search: String) {
+  private query: string = `
+   query($page: Int = 1, $perPage: Int = 10, $search: String, $type: MediaType) {
       page: Page(page: $page, perPage: $perPage) {
-        anime: media(search: $search, sort: SEARCH_MATCH, type: ANIME) {
+        media: media(search: $search, sort: SEARCH_MATCH, type: $type) {
           id
           title { romaji }
           coverImage { large }
@@ -17,13 +17,17 @@ export class AniListSearch implements Search {
       }
     }`;
 
-  public async searchMedia(query: string): Promise<[Media]> {
+  public async searchMedia(
+    query: string,
+    mediaType: MediaType
+  ): Promise<[Media]> {
     const body: any = {
-      query: this.animeQuery,
+      query: this.query,
       variables: {
         page: 1,
         perPage: 10,
-        search: query
+        search: query,
+        type: mediaType.toUpperCase()
       }
     };
 
@@ -39,10 +43,10 @@ export class AniListSearch implements Search {
     const json = await result.json();
 
     // TODO: Catch
-    return json.data.page.anime.map(anime => ({
-      id: anime.id,
-      title: anime.title.romaji,
-      image: anime.coverImage.large
+    return json.data.page.media.map(media => ({
+      id: mediaType + media.id,
+      title: media.title.romaji,
+      image: media.coverImage.large
     }));
   }
 }
