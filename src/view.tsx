@@ -5,6 +5,18 @@ import { bingoChart, bingoSettings } from "./views/bingo";
 
 export const view: View<State, Actions> = (state, actions) => (
   <main class="app-root">
+    <div
+      class="app-overlay"
+      style={{ display: state.bingo.showImage ? "block" : "none" }}
+      onclick={_ => actions.bingo.showImage(false)}
+    >
+      <div class="app-overlay__content">
+        <div>To save, right-click + "Save Image As..."</div>
+        <canvas class="js-bingo-output-canvas app-bingo__canvas" />
+        <div>Click anywhere to exit</div>
+      </div>
+    </div>
+
     <section class="app-search">
       <fieldset>
         <legend>Search</legend>
@@ -21,13 +33,15 @@ export const view: View<State, Actions> = (state, actions) => (
     </section>
 
     <section class="app-bingo">
+      <div class="app-bingo__generate">
+        <button
+          class="app-bingo__generate-button"
+          onclick={_ => actions.bingo.generate()}
+        >
+          Render as image
+        </button>
+      </div>
       {bingoChart(state, actions)}
-
-      <fieldset>
-        <legend>Output</legend>
-        <button onclick={_ => actions.bingo.generate()}>Generate image</button>
-        <canvas class="js-bingo-output-canvas" />
-      </fieldset>
     </section>
   </main>
 );

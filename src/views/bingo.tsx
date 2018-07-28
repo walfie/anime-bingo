@@ -75,7 +75,7 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
   };
 
   return (
-    <div class="app-bingo__container">
+    <div class="app-bingo__container" onclick={_ => actions.bingo.generate()}>
       <table class="js-bingo-table app-bingo__table" style={tableStyles}>
         <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
           {state.bingo.title}

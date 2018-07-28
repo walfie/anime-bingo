@@ -79,11 +79,15 @@ export namespace Actions {
   }
 
   export interface Bingo {
+    showImage: (show: boolean) => ActionResult<State.Bingo>;
     updateState: (
       newState: Partial<State.Bingo>
     ) => (state: State.Bingo) => ActionResult<State.Bingo>;
     resetSettings: () => ActionResult<State.Bingo>;
-    generate: () => (state: State.Bingo) => ActionResult<State.Bingo>;
+    generate: () => (
+      state: State.Bingo,
+      actions: Actions.Bingo
+    ) => ActionResult<State.Bingo>;
   }
 }
 
@@ -180,7 +184,7 @@ export const actions = (search: Search): Actions => ({
     resetSettings: () => {
       return State.Bingo.initial;
     },
-    generate: () => state => {
+    generate: () => (state, actions) => {
       const input = document.querySelector(".js-bingo-table") as HTMLElement;
       const output = document.querySelector(
         ".js-bingo-output-canvas"
@@ -189,9 +193,12 @@ export const actions = (search: Search): Actions => ({
       html2canvas(input, {
         allowTaint: true,
         canvas: output
+      }).then(_ => {
+        actions.showImage(true);
       });
-
-      return state;
+    },
+    showImage: show => {
+      return { showImage: show };
     }
   }
 });

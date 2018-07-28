@@ -24,6 +24,7 @@ export namespace State {
     font: string;
     backgroundColor: string;
     borderColor: string;
+    showImage: boolean;
   }
 
   export namespace Bingo {
@@ -45,16 +46,17 @@ export namespace State {
       "'MS Serif', 'New York', serif"
     ];
 
-    export const initial = {
+    export const initial: Bingo = {
       title: "Anime Bingo",
       font: allFonts[0],
       backgroundColor: "#ffffff",
-      borderColor: "#333333"
+      borderColor: "#333333",
+      showImage: false
     };
   }
 }
 
-export const initialState = {
+export const initialState: State = {
   search: {
     query: "",
     results: [],

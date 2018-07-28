@@ -115,6 +115,20 @@ body {
   flex: 2;
 }
 
+.app-bingo__generate {
+  margin-bottom: 10px;
+}
+
+.app-bingo__generate-button {
+  font-size: 20px;
+}
+
+.app-bingo__canvas {
+  width: auto !important;
+  max-height: 85%;
+  padding: 10px;
+}
+
 .app-bingo__container {
   display: inline-block;
 }
@@ -163,8 +177,28 @@ body {
   border-radius: 20px;
   font-size: 15px;
   background: rgba(0, 0, 0, 0.5);
-  color: #fff;
+  color: #ffffff;
   display: inline-block;
   padding: 5px;
   hyphens: auto;
+}
+
+.app-overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow-x: hidden;
+  color: #ffffff;
+  padding-top: 2.5%;
+}
+
+.app-overlay__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
