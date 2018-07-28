@@ -24,6 +24,7 @@ export namespace State {
     font: string;
     backgroundColor: string;
     borderColor: string;
+    hideTitles: boolean;
     showImage: boolean;
   }
 
@@ -51,6 +52,7 @@ export namespace State {
       font: allFonts[0],
       backgroundColor: "#ffffff",
       borderColor: "#333333",
+      hideTitles: false,
       showImage: false
     };
   }

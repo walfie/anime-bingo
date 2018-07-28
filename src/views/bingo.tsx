@@ -30,15 +30,17 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
   items.splice(middleIndex, 0, null);
 
   const cells = items.map((item, index) => {
-    let inner;
+    let inner = [];
     let style: any = { borderColor: state.bingo.borderColor };
 
     if (item) {
-      inner = [
-        <div class="app-bingo__cell-text">
-          {item.overriddenTitle || item.title}
-        </div>
-      ];
+      if (!state.bingo.hideTitles) {
+        inner = [
+          <div class="app-bingo__cell-text">
+            {item.overriddenTitle || item.title}
+          </div>
+        ];
+      }
       style = {
         ...style,
         backgroundImage: `url(${item.image})`
@@ -129,6 +131,15 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
         type="color"
         value={state.backgroundColor}
         onchange={e => actions.updateState({ backgroundColor: e.target.value })}
+      />
+    </label>
+
+    <label class="app-bingo_settings__label">
+      <span>Hide series title</span>
+      <input
+        type="checkbox"
+        checked={state.hideTitles}
+        onchange={e => actions.updateState({ hideTitles: e.target.checked })}
       />
     </label>
 
