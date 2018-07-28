@@ -4,66 +4,10 @@ import { Actions } from "./actions";
 import { bingoChart, bingoSettings } from "./views/bingo";
 
 export const view: View<State, Actions> = (state, actions) => (
-  <main>
-    <form
-      onsubmit={e => {
-        actions.search.execute();
-        actions.search.setVisibility(true);
-        e.preventDefault();
-      }}
-    >
-      <input
-        type="text"
-        value={state.search.query}
-        onfocus={_ => actions.search.setVisibility(true)}
-        oninput={e => actions.search.updateQuery(e.target.value)}
-      />
-      <button type="submit">Search</button>
-
-      <button
-        onclick={e => {
-          actions.search.updateQuery("");
-          e.preventDefault();
-        }}
-      >
-        Clear
-      </button>
-    </form>
-
-    <ul style={{ display: state.search.isVisible ? "block" : "none" }}>
-      {state.search.results.map(anime => {
-        return (
-          <li
-            key={anime.id}
-            onclick={_ => {
-              actions.selections.add(anime);
-              actions.search.setVisibility(false);
-            }}
-          >
-            {anime.title}
-            <img src={anime.image} />
-          </li>
-        );
-      })}
-    </ul>
-
-    <fieldset>
-      <legend>Selections</legend>
-      <button onclick={_ => actions.selections.shuffle()}>Shuffle</button>
-      <ul>
-        {state.selections.items.map(anime => {
-          return (
-            <li key={anime.id}>
-              <button onclick={_ => actions.selections.remove(anime.id)}>
-                delete
-              </button>
-              &nbsp;
-              {anime.title}
-            </li>
-          );
-        })}
-      </ul>
-    </fieldset>
+  <main class="app-root">
+    {searchForm(state.search, actions.search)}
+    {searchResults(state, actions)}
+    {selections(state.selections, actions.selections)}
 
     {bingoSettings(state.bingo, actions.bingo)}
 
@@ -75,4 +19,74 @@ export const view: View<State, Actions> = (state, actions) => (
       <canvas class="js-bingo-output-canvas" />
     </fieldset>
   </main>
+);
+
+export const searchForm: View<State.Search, Actions.Search> = (
+  state,
+  actions
+) => (
+  <form
+    onsubmit={e => {
+      actions.execute();
+      actions.setVisibility(true);
+      e.preventDefault();
+    }}
+  >
+    <input
+      type="text"
+      value={state.query}
+      onfocus={_ => actions.setVisibility(true)}
+      oninput={e => actions.updateQuery(e.target.value)}
+    />
+    <button type="submit">Search</button>
+
+    <button
+      onclick={e => {
+        actions.updateQuery("");
+        e.preventDefault();
+      }}
+    >
+      Clear
+    </button>
+  </form>
+);
+
+export const searchResults: View<State, Actions> = (state, actions) => (
+  <ul style={{ display: state.search.isVisible ? "block" : "none" }}>
+    {state.search.results.map(anime => {
+      return (
+        <li
+          key={anime.id}
+          onclick={_ => {
+            actions.selections.add(anime);
+            actions.search.setVisibility(false);
+          }}
+        >
+          {anime.title}
+          <img src={anime.image} />
+        </li>
+      );
+    })}
+  </ul>
+);
+
+export const selections: View<State.Selections, Actions.Selections> = (
+  state,
+  actions
+) => (
+  <fieldset>
+    <legend>Selections</legend>
+    <button onclick={_ => actions.shuffle()}>Shuffle</button>
+    <ul>
+      {state.items.map(anime => {
+        return (
+          <li key={anime.id}>
+            <button onclick={_ => actions.remove(anime.id)}>delete</button>
+            &nbsp;
+            {anime.title}
+          </li>
+        );
+      })}
+    </ul>
+  </fieldset>
 );
