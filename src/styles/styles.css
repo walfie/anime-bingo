@@ -195,6 +195,8 @@ body {
   color: #ffffff;
   display: inline-block;
   padding: 5px;
+  overflow-wrap: break-word;
+  word-break: break-word;
   hyphens: auto;
 }
 
