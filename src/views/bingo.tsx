@@ -92,12 +92,16 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
       onclick={_ => actions.bingo.generate()}
     >
       <table class="app-bingo__table" style={tableStyles}>
-        <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
-          {state.bingo.title}
-        </th>
-        {chunkArray(cells, maxRows).map(rowItems => (
-          <tr class="app-bingo__row">{rowItems}</tr>
-        ))}
+        <thead>
+          <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
+            {state.bingo.title}
+          </th>
+        </thead>
+        <tbody>
+          {chunkArray(cells, maxRows).map(rowItems => (
+            <tr class="app-bingo__row">{rowItems}</tr>
+          ))}
+        </tbody>
       </table>
       <div class="app-bingo__credit" style={footerStyles}>
         {source}

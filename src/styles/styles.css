@@ -157,10 +157,11 @@ body {
 
 .app-bingo__header {
   font-weight: bold;
-  font-size: 50px;
+  font-size: 40px;
   padding: 5px;
   border-bottom: 5px solid;
   border-right: 5px solid;
+  width: 1px;
 }
 
 .app-bingo__credit {
