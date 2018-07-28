@@ -25,6 +25,7 @@ body {
 
 .app-search__form {
   display: flex;
+  padding-bottom: 10px;
 }
 
 .app-search__form_input {
@@ -55,13 +56,17 @@ body {
 }
 
 .app-search__result-image {
-  padding: 5px;
-  max-height: 100px;
-  max-width: 100px;
+  margin: 5px;
+  width: 80px;
+  height: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .app-search__result-title {
   font-size: 1.2em;
+  flex: 1;
   align-self: center;
 }
 

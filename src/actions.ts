@@ -20,7 +20,7 @@ export namespace Actions {
       query: string
     ) => (state: State.Search) => ActionResult<State.Search>;
     updateMatches: (
-      searchResults: [Anime]
+      searchResults: Anime[]
     ) => (state: State.Search) => ActionResult<State.Search>;
     execute: () => (
       state: State.Search,

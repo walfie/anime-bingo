@@ -56,6 +56,8 @@ export const searchForm: View<State.Search, Actions.Search> = (
       class="app-search__form_button"
       onclick={e => {
         actions.updateQuery("");
+        actions.updateMatches([]);
+        actions.setVisibility(false);
         e.preventDefault();
       }}
     >
@@ -71,6 +73,7 @@ export const searchResults: View<State, Actions> = (state, actions) => (
   >
     <summary>Search results</summary>
     <ul class="app-search__results">
+      {state.search.results.length == 0 ? "No results" : null}
       {state.search.results.map(anime => {
         return (
           <li
@@ -81,7 +84,10 @@ export const searchResults: View<State, Actions> = (state, actions) => (
               actions.search.setVisibility(false);
             }}
           >
-            <img class="app-search__result-image" src={anime.image} />
+            <div
+              class="app-search__result-image"
+              style={{ backgroundImage: `url(${anime.image})` }}
+            />
             <span class="app-search__result-title">{anime.title}</span>
           </li>
         );
