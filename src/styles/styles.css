@@ -41,6 +41,8 @@ body {
 
 .app-search__results {
   padding-left: 5px;
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
 .app-search__result {

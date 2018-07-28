@@ -35,6 +35,7 @@ export namespace Actions {
     remove: (
       id: MediaId
     ) => (state: State.Selections) => ActionResult<State.Selections>;
+    removeAll: () => ActionResult<State.Selections>;
     shuffle: () => (state: State.Selections) => ActionResult<State.Selections>;
     commitEdit: (
       _: { id: MediaId; title: string }
@@ -92,6 +93,9 @@ export const actions = (search: Search): Actions => ({
     remove: (id: MediaId) => state => {
       return { items: state.items.filter(item => item.id != id) };
     },
+    removeAll: () => {
+      return { items: [] };
+    },
     shuffle: () => state => {
       shuffleArray(state.items);
       return { items: state.items };
@@ -99,7 +103,7 @@ export const actions = (search: Search): Actions => ({
     commitEdit: ({ id, title }) => state => {
       state.items.forEach(item => {
         if (item.id == id) {
-          item.title = title;
+          item.overriddenTitle = title;
         }
       });
       return { items: state.items };

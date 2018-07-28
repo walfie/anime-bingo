@@ -34,7 +34,11 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
     let style: any = { borderColor: state.bingo.borderColor };
 
     if (item) {
-      inner = [<div class="app-bingo__cell-text">{item.title}</div>];
+      inner = [
+        <div class="app-bingo__cell-text">
+          {item.overriddenTitle || item.title}
+        </div>
+      ];
       style = {
         ...style,
         backgroundImage: `url(${item.image})`

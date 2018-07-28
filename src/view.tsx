@@ -102,26 +102,34 @@ export const selections: View<State.Selections, Actions.Selections> = (
 ) => (
   <fieldset>
     <legend>Selections</legend>
-    <div>
-      {state.items.length ? (
+    {state.items.length ? (
+      <div>
         <button onclick={_ => actions.shuffle()}>Shuffle</button>
-      ) : (
-        <span>No items selected.</span>
-      )}
-    </div>
+        <button onclick={_ => actions.removeAll()}>Remove all</button>
+      </div>
+    ) : (
+      <div>No items selected.</div>
+    )}
     <ol>
       {state.items.map(media => {
         return (
           <li key={media.id}>
-            <button onclick={_ => actions.remove(media.id)}>Delete</button>
-            &nbsp;
             <input
-              value={media.title}
-              placeholder="Title"
+              value={media.overriddenTitle}
+              placeholder={media.title}
               oninput={e =>
                 actions.commitEdit({ id: media.id, title: e.target.value })
               }
             />
+            <button onclick={_ => actions.remove(media.id)}>Remove</button>
+            <button
+              style={{
+                display: media.overriddenTitle ? "inline" : "none"
+              }}
+              onclick={_ => actions.commitEdit({ id: media.id, title: null })}
+            >
+              Reset title
+            </button>
           </li>
         );
       })}
