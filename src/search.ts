@@ -5,7 +5,7 @@ export interface Search {
 }
 
 export class AniListSearch implements Search {
-  private baseUrl = "https://graphql.anilist.co/";
+  private baseUrl = "https://graphql.anilist.co";
   private animeQuery: string = `
    query($page: Int = 1, $perPage: Int = 10, $search: String) {
       page: Page(page: $page, perPage: $perPage) {

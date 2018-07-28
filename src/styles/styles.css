@@ -23,6 +23,11 @@ body {
   max-width: 100%;
 }
 
+.app-search__error {
+  color: #ff0000;
+  padding: 0 0 10px 10px;
+}
+
 .app-search__form {
   display: flex;
   padding-bottom: 10px;
@@ -36,7 +41,8 @@ body {
 
 .app-search__form_button {
   margin-left: 5px;
-  font-size: 1.1em;
+  font-size: 18px;
+  width: 60px;
 }
 
 .app-search__results {

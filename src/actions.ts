@@ -13,6 +13,9 @@ export interface Actions {
 
 export namespace Actions {
   export interface Search {
+    updateState: (
+      newState: Partial<State.Search>
+    ) => ActionResult<State.Search>;
     setVisibility: (
       isVisible: boolean
     ) => (state: State.Search) => ActionResult<State.Search>;
@@ -67,6 +70,9 @@ export const actions = (search: Search): Actions => ({
     return state;
   },
   search: {
+    updateState: newState => {
+      return newState;
+    },
     setVisibility: (isVisible: boolean) => _ => {
       return { isVisible };
     },
@@ -77,8 +83,15 @@ export const actions = (search: Search): Actions => ({
       return { results };
     },
     execute: () => async (state, actions) => {
-      const searchResults = await search.searchMedia(state.query);
-      actions.updateMatches(searchResults);
+      actions.updateState({ isLoading: true, error: null });
+      try {
+        const searchResults = await search.searchMedia(state.query);
+        actions.updateMatches(searchResults);
+      } catch (err) {
+        actions.updateState({ error: err.toString() });
+      } finally {
+        actions.updateState({ isLoading: false });
+      }
     }
   },
   selections: {

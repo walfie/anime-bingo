@@ -11,6 +11,8 @@ export namespace State {
     query: string;
     results: Media[];
     isVisible: boolean;
+    isLoading: boolean;
+    error: string;
   }
 
   export interface Selections {
@@ -56,7 +58,9 @@ export const initialState = {
   search: {
     query: "",
     results: [],
-    isVisible: false
+    isVisible: false,
+    isLoading: false,
+    error: null
   },
   selections: {
     items: []

@@ -9,6 +9,9 @@ export const view: View<State, Actions> = (state, actions) => (
       <fieldset>
         <legend>Search</legend>
         {searchForm(state.search, actions.search)}
+        {state.search.error && (
+          <div class="app-search__error">{state.search.error}</div>
+        )}
         {searchResults(state, actions)}
       </fieldset>
       {selections(state.selections, actions.selections)}
@@ -49,7 +52,7 @@ export const searchForm: View<State.Search, Actions.Search> = (
       oninput={e => actions.updateQuery(e.target.value)}
     />
     <button class="app-search__form_button" type="submit">
-      Search
+      {state.isLoading ? " \u23F3" : "Search"}
     </button>
 
     <button
