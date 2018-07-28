@@ -65,26 +65,29 @@ export const searchForm: View<State.Search, Actions.Search> = (
 );
 
 export const searchResults: View<State, Actions> = (state, actions) => (
-  <ul
-    class="app-search__results"
-    style={{ display: state.search.isVisible ? "block" : "none" }}
+  <details
+    open={state.search.isVisible}
+    ontoggle={e => actions.search.setVisibility(e.srcElement.open)}
   >
-    {state.search.results.map(anime => {
-      return (
-        <li
-          class="app-search__result"
-          key={anime.id}
-          onclick={_ => {
-            actions.selections.add(anime);
-            actions.search.setVisibility(false);
-          }}
-        >
-          <img class="app-search__result-image" src={anime.image} />
-          <span class="app-search__result-title">{anime.title}</span>
-        </li>
-      );
-    })}
-  </ul>
+    <summary>Search results</summary>
+    <ul class="app-search__results">
+      {state.search.results.map(anime => {
+        return (
+          <li
+            class="app-search__result"
+            key={anime.id}
+            onclick={_ => {
+              actions.selections.add(anime);
+              actions.search.setVisibility(false);
+            }}
+          >
+            <img class="app-search__result-image" src={anime.image} />
+            <span class="app-search__result-title">{anime.title}</span>
+          </li>
+        );
+      })}
+    </ul>
+  </details>
 );
 
 export const selections: View<State.Selections, Actions.Selections> = (
