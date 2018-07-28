@@ -14,12 +14,13 @@ export const view: View<State, Actions> = (state, actions) => (
         )}
         {searchResults(state, actions)}
       </fieldset>
+
       {selections(state.selections, actions.selections)}
+
+      {bingoSettings(state.bingo, actions.bingo)}
     </section>
 
     <section class="app-bingo">
-      {bingoSettings(state.bingo, actions.bingo)}
-
       {bingoChart(state, actions)}
 
       <fieldset>
@@ -103,7 +104,7 @@ export const selections: View<State.Selections, Actions.Selections> = (
   state,
   actions
 ) => (
-  <fieldset>
+  <fieldset class="app-selections_container">
     <legend>Selections</legend>
     {state.items.length ? (
       <div>

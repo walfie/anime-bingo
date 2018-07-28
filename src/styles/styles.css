@@ -4,6 +4,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 *,
@@ -78,6 +79,10 @@ body {
   align-self: center;
 }
 
+.app-selections_container {
+  margin-top: 10px;
+}
+
 .app-selections {
   padding-left: 20px;
 }
@@ -89,6 +94,19 @@ body {
 
 .app-selections__media-title {
   flex: 1;
+}
+
+.app-bingo_settings {
+  margin-top: 10px;
+}
+
+.app-bingo_settings__label {
+  display: block;
+  padding-bottom: 5px;
+}
+
+.app-bingo_settings__label > span {
+  margin-right: 10px;
 }
 
 .app-bingo {

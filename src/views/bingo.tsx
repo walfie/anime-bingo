@@ -92,11 +92,20 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
   state,
   actions
 ) => (
-  <fieldset>
+  <fieldset class="app-bingo_settings">
     <legend>Bingo display settings</legend>
 
-    <label>
-      Font
+    <label class="app-bingo_settings__label">
+      <span>Title</span>
+      <input
+        type="text"
+        value={state.title}
+        oninput={e => actions.updateState({ title: e.target.value })}
+      />
+    </label>
+
+    <label class="app-bingo_settings__label">
+      <span>Font</span>
       <select
         onchange={e => actions.updateState({ font: e.target.value })}
         value={state.font}
@@ -105,30 +114,18 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
       </select>
     </label>
 
-    <label>
-      Title
+    <label class="app-bingo_settings__label">
+      <span>Border Color</span>
       <input
-        for="settingsTitle"
-        type="text"
-        value={state.title}
-        oninput={e => actions.updateState({ title: e.target.value })}
-      />
-    </label>
-
-    <label>
-      Border Color
-      <input
-        for="settingsBorderColor"
         type="color"
         value={state.borderColor}
         onchange={e => actions.updateState({ borderColor: e.target.value })}
       />
     </label>
 
-    <label>
-      Background Color
+    <label class="app-bingo_settings__label">
+      <span>Background Color</span>
       <input
-        for="settingsBackgroundColor"
         type="color"
         value={state.backgroundColor}
         onchange={e => actions.updateState({ backgroundColor: e.target.value })}

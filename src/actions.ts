@@ -4,13 +4,15 @@ import { State } from "./state";
 import { MediaId, Media } from "./models";
 import * as html2canvas from "html2canvas";
 
-const storageKey = "selections";
+const selectionsStorageKey = "selections";
 const saveSelectionsToStorage = (selections: State.Selections) => {
-  localStorage.setItem(storageKey, JSON.stringify(selections));
+  localStorage.setItem(selectionsStorageKey, JSON.stringify(selections));
 };
 export const loadSelelectionsFromStorage = (): State.Selections => {
   // TODO: Versioning
-  return JSON.parse(localStorage.getItem(storageKey)) as State.Selections;
+  return JSON.parse(
+    localStorage.getItem(selectionsStorageKey)
+  ) as State.Selections;
 };
 
 export interface Actions {
