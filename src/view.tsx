@@ -74,21 +74,21 @@ export const searchResults: View<State, Actions> = (state, actions) => (
     <summary>Search results</summary>
     <ul class="app-search__results">
       {state.search.results.length == 0 ? "No results" : null}
-      {state.search.results.map(anime => {
+      {state.search.results.map(media => {
         return (
           <li
             class="app-search__result"
-            key={anime.id}
+            key={media.id}
             onclick={_ => {
-              actions.selections.add(anime);
+              actions.selections.add(media);
               actions.search.setVisibility(false);
             }}
           >
             <div
               class="app-search__result-image"
-              style={{ backgroundImage: `url(${anime.image})` }}
+              style={{ backgroundImage: `url(${media.image})` }}
             />
-            <span class="app-search__result-title">{anime.title}</span>
+            <span class="app-search__result-title">{media.title}</span>
           </li>
         );
       })}
@@ -110,16 +110,16 @@ export const selections: View<State.Selections, Actions.Selections> = (
       )}
     </div>
     <ol>
-      {state.items.map(anime => {
+      {state.items.map(media => {
         return (
-          <li key={anime.id}>
-            <button onclick={_ => actions.remove(anime.id)}>Delete</button>
+          <li key={media.id}>
+            <button onclick={_ => actions.remove(media.id)}>Delete</button>
             &nbsp;
             <input
-              value={anime.title}
+              value={media.title}
               placeholder="Title"
               oninput={e =>
-                actions.commitEdit({ id: anime.id, title: e.target.value })
+                actions.commitEdit({ id: media.id, title: e.target.value })
               }
             />
           </li>

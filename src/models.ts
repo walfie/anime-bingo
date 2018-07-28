@@ -1,7 +1,7 @@
-export type AnimeId = number;
+export type MediaId = number;
 
-export interface Anime {
-  id: AnimeId;
+export interface Media {
+  id: MediaId;
   title: string;
   image: string;
 }

@@ -1,7 +1,7 @@
 import { h, app, ActionsType, ActionResult, View } from "hyperapp";
 import { Search, AniListSearch } from "./search";
 import { State } from "./state";
-import { AnimeId, Anime } from "./models";
+import { MediaId, Media } from "./models";
 import * as html2canvas from "html2canvas";
 
 export interface Actions {
@@ -20,7 +20,7 @@ export namespace Actions {
       query: string
     ) => (state: State.Search) => ActionResult<State.Search>;
     updateMatches: (
-      searchResults: Anime[]
+      searchResults: Media[]
     ) => (state: State.Search) => ActionResult<State.Search>;
     execute: () => (
       state: State.Search,
@@ -30,14 +30,14 @@ export namespace Actions {
 
   export interface Selections {
     add: (
-      item: Anime
+      item: Media
     ) => (state: State.Selections) => ActionResult<State.Selections>;
     remove: (
-      id: AnimeId
+      id: MediaId
     ) => (state: State.Selections) => ActionResult<State.Selections>;
     shuffle: () => (state: State.Selections) => ActionResult<State.Selections>;
     commitEdit: (
-      _: { id: AnimeId; title: string }
+      _: { id: MediaId; title: string }
     ) => (state: State.Selections) => ActionResult<State.Selections>;
   }
 
@@ -72,16 +72,16 @@ export const actions = (search: Search): Actions => ({
     updateQuery: (query: string) => _ => {
       return { query };
     },
-    updateMatches: (results: [Anime]) => _ => {
+    updateMatches: (results: [Media]) => _ => {
       return { results };
     },
     execute: () => async (state, actions) => {
-      const searchResults = await search.searchAnime(state.query);
+      const searchResults = await search.searchMedia(state.query);
       actions.updateMatches(searchResults);
     }
   },
   selections: {
-    add: (item: Anime) => state => {
+    add: (item: Media) => state => {
       // If item already exists, don't add it again
       const items = state.items.find(existing => existing.id == item.id)
         ? state.items
@@ -89,7 +89,7 @@ export const actions = (search: Search): Actions => ({
 
       return { items };
     },
-    remove: (id: AnimeId) => state => {
+    remove: (id: MediaId) => state => {
       return { items: state.items.filter(item => item.id != id) };
     },
     shuffle: () => state => {

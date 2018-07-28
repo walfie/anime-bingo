@@ -1,4 +1,4 @@
-import { Anime, AnimeId } from "./models";
+import { Media, MediaId } from "./models";
 
 export interface State {
   search: State.Search;
@@ -9,12 +9,12 @@ export interface State {
 export namespace State {
   export interface Search {
     query: string;
-    results: Anime[];
+    results: Media[];
     isVisible: boolean;
   }
 
   export interface Selections {
-    items: Anime[];
+    items: Media[];
   }
 
   export interface Bingo {

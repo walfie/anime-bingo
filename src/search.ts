@@ -1,14 +1,14 @@
-import { Anime } from "./models";
+import { Media } from "./models";
 
 export interface Search {
-  searchAnime(query: string): Promise<[Anime]>;
+  searchMedia(query: string): Promise<[Media]>;
 }
 
 export class AniListSearch implements Search {
   private baseUrl = "https://graphql.anilist.co/";
   private animeQuery: string = `
    query($page: Int = 1, $perPage: Int = 10, $search: String) {
-      Page(page: $page, perPage: $perPage) {
+      page: Page(page: $page, perPage: $perPage) {
         anime: media(search: $search, sort: SEARCH_MATCH, type: ANIME) {
           id
           title { romaji }
@@ -17,7 +17,7 @@ export class AniListSearch implements Search {
       }
     }`;
 
-  public async searchAnime(query: string): Promise<[Anime]> {
+  public async searchMedia(query: string): Promise<[Media]> {
     const body: any = {
       query: this.animeQuery,
       variables: {
@@ -39,7 +39,7 @@ export class AniListSearch implements Search {
     const json = await result.json();
 
     // TODO: Catch
-    return json.data.Page.anime.map(anime => ({
+    return json.data.page.anime.map(anime => ({
       id: anime.id,
       title: anime.title.romaji,
       image: anime.coverImage.large
