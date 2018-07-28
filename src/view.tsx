@@ -13,7 +13,7 @@ export const view: View<State, Actions> = (state, actions) => (
       <div class="app-overlay__content">
         <div>To save, right-click + "Save Image As..."</div>
         <canvas class="js-bingo-output-canvas app-bingo__canvas" />
-        <div>Click anywhere to exit</div>
+        <div>Click anywhere to exit.</div>
       </div>
     </div>
 

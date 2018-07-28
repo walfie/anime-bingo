@@ -18,6 +18,12 @@ body {
   display: flex;
 }
 
+@media screen and (orientation: portrait) {
+  .app-root {
+    flex-direction: column;
+  }
+}
+
 .app-search {
   flex: 1;
   padding: 10px;
@@ -36,7 +42,7 @@ body {
 
 .app-search__form_input {
   flex: 1;
-  font-size: 1.5em;
+  font-size: 20px;
   vertical-align: middle;
 }
 
@@ -113,6 +119,7 @@ body {
   padding: 10px;
   text-align: center;
   flex: 2;
+  overflow: scroll;
 }
 
 .app-bingo__generate {
@@ -125,7 +132,7 @@ body {
 
 .app-bingo__canvas {
   width: auto !important;
-  max-height: 85%;
+  max-height: 75%;
   padding: 10px;
 }
 
