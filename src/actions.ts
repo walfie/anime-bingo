@@ -94,7 +94,11 @@ export const actions = (search: Search): Actions => ({
       return { items: state.items.filter(item => item.id != id) };
     },
     removeAll: () => {
-      return { items: [] };
+      if (confirm("Remove all items?")) {
+        return { items: [] };
+      } else {
+        return {};
+      }
     },
     shuffle: () => state => {
       shuffleArray(state.items);
