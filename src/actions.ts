@@ -4,15 +4,20 @@ import { State } from "./state";
 import { MediaId, Media } from "./models";
 import * as html2canvas from "html2canvas";
 
-const selectionsStorageKey = "selections";
-const saveSelectionsToStorage = (selections: State.Selections) => {
-  localStorage.setItem(selectionsStorageKey, JSON.stringify(selections));
+const storageKey = "animeBingo";
+const storageField = {
+  selections: "selections",
+  bingo: "bingo"
 };
-export const loadSelelectionsFromStorage = (): State.Selections => {
-  // TODO: Versioning
-  return JSON.parse(
-    localStorage.getItem(selectionsStorageKey)
-  ) as State.Selections;
+
+const persist = (fieldKey: string, value: any) => {
+  let item = JSON.parse(localStorage.getItem(storageKey) || "{}");
+  item[fieldKey] = value;
+  localStorage.setItem(storageKey, JSON.stringify(item));
+};
+
+export const loadStorage = (fieldKey: string): any => {
+  return JSON.parse(localStorage.getItem(storageKey) || "{}")[fieldKey];
 };
 
 export interface Actions {
@@ -79,11 +84,20 @@ export namespace Actions {
   }
 
   export interface Bingo {
+    persistState: () => (state: State.Bingo) => ActionResult<State.Bingo>;
+    loadState: () => ActionResult<State.Bingo>;
     showCanvas: (show: boolean) => ActionResult<State.Bingo>;
-    updateState: (
+    updateState: (newState: Partial<State.Bingo>) => ActionResult<State.Bingo>;
+    updateAndPersistState: (
       newState: Partial<State.Bingo>
-    ) => (state: State.Bingo) => ActionResult<State.Bingo>;
-    resetSettings: () => ActionResult<State.Bingo>;
+    ) => (
+      state: State.Bingo,
+      actions: Actions.Bingo
+    ) => ActionResult<State.Bingo>;
+    resetSettings: () => (
+      state: State.Bingo,
+      actions: Actions.Bingo
+    ) => ActionResult<State.Bingo>;
     generate: () => (
       state: State.Bingo,
       actions: Actions.Bingo
@@ -140,10 +154,10 @@ export const actions = (search: Search): Actions => ({
       return newState;
     },
     persistState: () => state => {
-      saveSelectionsToStorage(state);
+      persist(storageField.selections, state);
     },
     loadState: () => {
-      return loadSelelectionsFromStorage();
+      return loadStorage(storageField.selections);
     },
     add: (item: Media) => (state, actions) => {
       // If item already exists, don't add it again
@@ -182,11 +196,21 @@ export const actions = (search: Search): Actions => ({
     }
   },
   bingo: {
-    updateState: (newState: Partial<State.Bingo>) => oldState => {
+    persistState: () => state => {
+      persist(storageField.bingo, state);
+    },
+    loadState: () => {
+      return loadStorage(storageField.bingo);
+    },
+    updateAndPersistState: newState => (_, actions) => {
+      actions.updateState(newState);
+      actions.persistState();
+    },
+    updateState: newState => {
       return newState;
     },
-    resetSettings: () => {
-      return State.Bingo.initial;
+    resetSettings: () => (_, actions) => {
+      actions.updateAndPersistState(State.Bingo.initial);
     },
     generate: () => (state, actions) => {
       const input = document.querySelector(

@@ -16,6 +16,7 @@ const application = app(
 );
 
 application.selections.loadState();
+application.bingo.loadState();
 
 (window as any).application = application;
 

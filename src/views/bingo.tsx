@@ -122,14 +122,14 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
       <input
         type="text"
         value={state.title}
-        oninput={e => actions.updateState({ title: e.target.value })}
+        oninput={e => actions.updateAndPersistState({ title: e.target.value })}
       />
     </label>
 
     <label class="app-bingo_settings__label">
       <span>Font</span>
       <select
-        onchange={e => actions.updateState({ font: e.target.value })}
+        onchange={e => actions.updateAndPersistState({ font: e.target.value })}
         value={state.font}
       >
         {State.Bingo.allFonts.map(font => <option value={font}>{font}</option>)}
@@ -141,7 +141,9 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
       <input
         type="color"
         value={state.borderColor}
-        onchange={e => actions.updateState({ borderColor: e.target.value })}
+        onchange={e =>
+          actions.updateAndPersistState({ borderColor: e.target.value })
+        }
       />
     </label>
 
@@ -150,7 +152,9 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
       <input
         type="color"
         value={state.backgroundColor}
-        onchange={e => actions.updateState({ backgroundColor: e.target.value })}
+        onchange={e =>
+          actions.updateAndPersistState({ backgroundColor: e.target.value })
+        }
       />
     </label>
 
@@ -159,7 +163,9 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
       <input
         type="checkbox"
         checked={state.showTitles}
-        onchange={e => actions.updateState({ showTitles: e.target.checked })}
+        onchange={e =>
+          actions.updateAndPersistState({ showTitles: e.target.checked })
+        }
       />
     </label>
 
@@ -168,7 +174,9 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
       <input
         type="checkbox"
         checked={state.showCredit}
-        onchange={e => actions.updateState({ showCredit: e.target.checked })}
+        onchange={e =>
+          actions.updateAndPersistState({ showCredit: e.target.checked })
+        }
       />
     </label>
 
