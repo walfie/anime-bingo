@@ -102,17 +102,30 @@ export const selections: View<State.Selections, Actions.Selections> = (
 ) => (
   <fieldset>
     <legend>Selections</legend>
-    <button onclick={_ => actions.shuffle()}>Shuffle</button>
-    <ul>
+    <div>
+      {state.items.length ? (
+        <button onclick={_ => actions.shuffle()}>Shuffle</button>
+      ) : (
+        <span>No items selected.</span>
+      )}
+    </div>
+    <ol>
       {state.items.map(anime => {
         return (
           <li key={anime.id}>
-            <button onclick={_ => actions.remove(anime.id)}>delete</button>
+            <button onclick={_ => actions.remove(anime.id)}>Delete</button>
             &nbsp;
-            {anime.title}
+            <input
+              value={anime.title}
+              placeholder="Title"
+              oninput={e =>
+                actions.commitEdit({ id: anime.id, title: e.target.value })
+              }
+            />
           </li>
         );
       })}
-    </ul>
+    </ol>
+    <span>Add items by using the search bar above!</span>
   </fieldset>
 );

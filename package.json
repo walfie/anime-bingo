@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "parcel src/index.html",
-    "check": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'",
     "precommit": "pretty-quick --staged"
   }

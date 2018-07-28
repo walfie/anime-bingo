@@ -1,4 +1,4 @@
-import { Anime } from "./models";
+import { Anime, AnimeId } from "./models";
 
 export interface State {
   search: State.Search;

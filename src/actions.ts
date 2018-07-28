@@ -36,6 +36,9 @@ export namespace Actions {
       id: AnimeId
     ) => (state: State.Selections) => ActionResult<State.Selections>;
     shuffle: () => (state: State.Selections) => ActionResult<State.Selections>;
+    commitEdit: (
+      _: { id: AnimeId; title: string }
+    ) => (state: State.Selections) => ActionResult<State.Selections>;
   }
 
   export interface Bingo {
@@ -91,6 +94,14 @@ export const actions = (search: Search): Actions => ({
     },
     shuffle: () => state => {
       shuffleArray(state.items);
+      return { items: state.items };
+    },
+    commitEdit: ({ id, title }) => state => {
+      state.items.forEach(item => {
+        if (item.id == id) {
+          item.title = title;
+        }
+      });
       return { items: state.items };
     }
   },
