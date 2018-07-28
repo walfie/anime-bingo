@@ -166,4 +166,5 @@ body {
   color: #fff;
   display: inline-block;
   padding: 5px;
+  hyphens: auto;
 }
