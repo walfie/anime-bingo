@@ -34,7 +34,7 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
     let style: any = { borderColor: state.bingo.borderColor };
 
     if (item) {
-      if (!state.bingo.hideTitles) {
+      if (state.bingo.showTitles) {
         inner = [
           <div class="app-bingo__cell-text">
             {item.overriddenTitle || item.title}
@@ -151,11 +151,11 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
     </label>
 
     <label class="app-bingo_settings__label">
-      <span>Hide series title</span>
+      <span>Show series title</span>
       <input
         type="checkbox"
-        checked={state.hideTitles}
-        onchange={e => actions.updateState({ hideTitles: e.target.checked })}
+        checked={state.showTitles}
+        onchange={e => actions.updateState({ showTitles: e.target.checked })}
       />
     </label>
 

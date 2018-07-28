@@ -24,7 +24,7 @@ export namespace State {
     font: string;
     backgroundColor: string;
     borderColor: string;
-    hideTitles: boolean;
+    showTitles: boolean;
     showCanvas: boolean;
     showCredit: boolean;
   }
@@ -53,9 +53,9 @@ export namespace State {
       font: allFonts[0],
       backgroundColor: "#ffffff",
       borderColor: "#333333",
-      hideTitles: false,
+      showTitles: true,
       showCanvas: false,
-      showCredit: false
+      showCredit: true
     };
   }
 }
