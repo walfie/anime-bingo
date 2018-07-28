@@ -76,9 +76,22 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
     color: state.bingo.borderColor
   };
 
+  const footerStyles = {
+    color: state.bingo.backgroundColor,
+    backgroundColor: state.bingo.borderColor,
+    display: state.bingo.showCredit ? "block" : "none"
+  };
+
+  const source =
+    document.location.host +
+    (document.location.pathname == "/" ? "" : document.location.pathname);
+
   return (
-    <div class="app-bingo__container" onclick={_ => actions.bingo.generate()}>
-      <table class="js-bingo-table app-bingo__table" style={tableStyles}>
+    <div
+      class="js-bingo-container app-bingo__container"
+      onclick={_ => actions.bingo.generate()}
+    >
+      <table class="app-bingo__table" style={tableStyles}>
         <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
           {state.bingo.title}
         </th>
@@ -86,6 +99,9 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
           <tr class="app-bingo__row">{rowItems}</tr>
         ))}
       </table>
+      <div class="app-bingo__credit" style={footerStyles}>
+        {source}
+      </div>
     </div>
   );
 };
@@ -140,6 +156,15 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
         type="checkbox"
         checked={state.hideTitles}
         onchange={e => actions.updateState({ hideTitles: e.target.checked })}
+      />
+    </label>
+
+    <label class="app-bingo_settings__label">
+      <span>Show site URL in footer</span>
+      <input
+        type="checkbox"
+        checked={state.showCredit}
+        onchange={e => actions.updateState({ showCredit: e.target.checked })}
       />
     </label>
 

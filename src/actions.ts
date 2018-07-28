@@ -79,7 +79,7 @@ export namespace Actions {
   }
 
   export interface Bingo {
-    showImage: (show: boolean) => ActionResult<State.Bingo>;
+    showCanvas: (show: boolean) => ActionResult<State.Bingo>;
     updateState: (
       newState: Partial<State.Bingo>
     ) => (state: State.Bingo) => ActionResult<State.Bingo>;
@@ -185,7 +185,9 @@ export const actions = (search: Search): Actions => ({
       return State.Bingo.initial;
     },
     generate: () => (state, actions) => {
-      const input = document.querySelector(".js-bingo-table") as HTMLElement;
+      const input = document.querySelector(
+        ".js-bingo-container"
+      ) as HTMLElement;
       const output = document.querySelector(
         ".js-bingo-output-canvas"
       ) as HTMLElement;
@@ -194,11 +196,11 @@ export const actions = (search: Search): Actions => ({
         allowTaint: true,
         canvas: output
       }).then(_ => {
-        actions.showImage(true);
+        actions.showCanvas(true);
       });
     },
-    showImage: show => {
-      return { showImage: show };
+    showCanvas: show => {
+      return { showCanvas: show };
     }
   }
 });

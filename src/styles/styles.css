@@ -108,7 +108,7 @@ body {
 
 .app-bingo_settings__label {
   display: block;
-  padding-bottom: 5px;
+  padding-bottom: 8px;
 }
 
 .app-bingo_settings__label > span {
@@ -132,7 +132,9 @@ body {
 
 .app-bingo__canvas {
   width: auto !important;
-  max-height: 75%;
+  height: auto !important;
+  max-width: 90%;
+  max-height: 85%;
   padding: 10px;
 }
 
@@ -154,6 +156,12 @@ body {
   padding: 5px;
   border-bottom: 5px solid;
   border-right: 5px solid;
+}
+
+.app-bingo__credit {
+  text-align: right;
+  padding-right: 5px;
+  padding-bottom: 2px;
 }
 
 .app-bingo__cell {
@@ -200,7 +208,7 @@ body {
   background-color: rgba(0, 0, 0, 0.8);
   overflow-x: hidden;
   color: #ffffff;
-  padding-top: 2.5%;
+  padding-top: 20px;
 }
 
 .app-overlay__content {

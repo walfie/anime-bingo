@@ -25,7 +25,8 @@ export namespace State {
     backgroundColor: string;
     borderColor: string;
     hideTitles: boolean;
-    showImage: boolean;
+    showCanvas: boolean;
+    showCredit: boolean;
   }
 
   export namespace Bingo {
@@ -53,7 +54,8 @@ export namespace State {
       backgroundColor: "#ffffff",
       borderColor: "#333333",
       hideTitles: false,
-      showImage: false
+      showCanvas: false,
+      showCredit: false
     };
   }
 }

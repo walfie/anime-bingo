@@ -7,8 +7,8 @@ export const view: View<State, Actions> = (state, actions) => (
   <main class="app-root">
     <div
       class="app-overlay"
-      style={{ display: state.bingo.showImage ? "block" : "none" }}
-      onclick={_ => actions.bingo.showImage(false)}
+      style={{ display: state.bingo.showCanvas ? "block" : "none" }}
+      onclick={_ => actions.bingo.showCanvas(false)}
     >
       <div class="app-overlay__content">
         <div>To save, right-click + "Save Image As..."</div>
