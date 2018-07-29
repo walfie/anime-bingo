@@ -148,19 +148,13 @@ body {
 }
 
 .app-bingo__table {
-  border: 5px solid #000;
-  border-spacing: 0;
-
-  border-bottom-width: 0;
-  border-right-width: 0;
+  border-spacing: 6px;
 }
 
 .app-bingo__header {
   font-weight: bold;
   font-size: 40px;
   padding: 5px;
-  border-bottom: 5px solid;
-  border-right: 5px solid;
   width: 1px;
 }
 
@@ -171,8 +165,6 @@ body {
 }
 
 .app-bingo__cell {
-  border: 5px solid #000;
-  background-color: #fff;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50%;
@@ -185,9 +177,6 @@ body {
   text-align: center;
   box-sizing: border-box;
   padding: 10px;
-
-  border-top-width: 0;
-  border-left-width: 0;
 }
 
 .app-bingo__cell-free {

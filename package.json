@@ -24,6 +24,6 @@
     "start": "parcel src/index.html",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'",
-    "precommit": "pretty-quick --staged"
+    "precommit": "tsc --noEmit && pretty-quick --staged"
   }
 }

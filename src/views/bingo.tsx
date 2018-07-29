@@ -68,12 +68,13 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
 
   const tableStyles = {
     borderColor: state.bingo.borderColor,
-    backgroundColor: state.bingo.backgroundColor,
+    backgroundColor: state.bingo.borderColor,
     fontFamily: state.bingo.font
   };
 
   const headerStyles = {
-    color: state.bingo.borderColor
+    color: state.bingo.borderColor,
+    backgroundColor: state.bingo.backgroundColor
   };
 
   const footerStyles = {
