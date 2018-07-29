@@ -125,17 +125,28 @@ body {
   flex: 1;
 }
 
+.app-custom,
 .app-bingo_settings {
   margin-top: 10px;
 }
 
-.app-bingo_settings__label {
-  display: block;
+.app-bingo_settings__label,
+.app-custom__label {
+  display: flex;
   padding-bottom: 8px;
 }
 
-.app-bingo_settings__label > span {
+.app-bingo_settings__label > span,
+.app-custom__label > span {
   margin-right: 10px;
+}
+
+.app-custom__input {
+  flex: 1;
+}
+
+.app-custom__explanation {
+  font-size: 0.8em;
 }
 
 .app-bingo {

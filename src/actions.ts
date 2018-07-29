@@ -237,6 +237,9 @@ export const actions = (search: Search): Actions => ({
   },
   custom: {
     updateState: newState => {
+      if (newState.imageUrl === "") {
+        newState.isError = false;
+      }
       return newState;
     },
     validateFile: file => async (state, actions) => {
