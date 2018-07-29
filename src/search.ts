@@ -7,9 +7,9 @@ export interface Search {
 export class AniListSearch implements Search {
   private baseUrl = "https://graphql.anilist.co";
   private query: string = `
-   query($page: Int = 1, $perPage: Int = 10, $search: String, $type: MediaType) {
+   query($page: Int = 1, $perPage: Int = 10, $search: String, $type: MediaType, $sort: [MediaSort]) {
       page: Page(page: $page, perPage: $perPage) {
-        media: media(search: $search, sort: SEARCH_MATCH, type: $type) {
+        media: media(search: $search, sort: $sort, type: $type) {
           id
           title { romaji }
           coverImage { large }
@@ -27,7 +27,8 @@ export class AniListSearch implements Search {
         page: 1,
         perPage: 10,
         search: query,
-        type: mediaType.toUpperCase()
+        type: mediaType.toUpperCase(),
+        sort: ["POPULARITY_DESC", "SEARCH_MATCH"]
       }
     };
 
