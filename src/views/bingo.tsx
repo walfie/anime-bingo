@@ -2,6 +2,9 @@ import { h, View } from "hyperapp";
 import { State } from "../state";
 import { Actions } from "../actions";
 
+const sourceUrl =
+  document.location.host + document.location.pathname.replace(/\/$/, "");
+
 // Break an array up into smaller arrays of fixed size
 const chunkArray = <T extends {}>(array: T[], chunkSize: number): T[][] => {
   let arrays: T[][] = [];
@@ -83,10 +86,6 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
     display: state.bingo.showCredit ? "block" : "none"
   };
 
-  const source =
-    document.location.host +
-    (document.location.pathname == "/" ? "" : document.location.pathname);
-
   return (
     <div
       class="js-bingo-container app-bingo__container"
@@ -105,7 +104,7 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
         </tbody>
       </table>
       <div class="app-bingo__credit" style={footerStyles}>
-        {source}
+        {sourceUrl}
       </div>
     </div>
   );

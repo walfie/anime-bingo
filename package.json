@@ -7,6 +7,7 @@
     "@types/html2canvas": "^0.0.33",
     "@types/parcel-env": "^0.0.0",
     "assemble": "~0.3.11",
+    "gh-pages": "^1.2.0",
     "grunt": "~0.4.0",
     "husky": "^0.14.3",
     "parcel-bundler": "^1.9.7",
@@ -21,9 +22,11 @@
     "hyperapp": "^1.2.8"
   },
   "scripts": {
-    "start": "parcel src/index.html",
-    "typecheck": "tsc --noEmit",
+    "build": "rimraf dist && parcel build --public-url ./ src/index.html",
+    "deploy": "npm run build && cp CNAME dist/ && gh-pages -d dist -m 'Updating gh-pages'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css}'",
-    "precommit": "tsc --noEmit && pretty-quick --staged"
+    "precommit": "tsc --noEmit && pretty-quick --staged",
+    "start": "parcel src/index.html",
+    "typecheck": "tsc --noEmit"
   }
 }
