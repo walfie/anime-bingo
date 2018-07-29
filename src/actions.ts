@@ -215,11 +215,19 @@ export const actions = (search: Search): Actions => ({
       actions.persistState();
     },
     remove: (id: MediaId) => (state, actions) => {
-      actions.updateState({ items: state.items.filter(item => item.id != id) });
+      const newItems = state.items.filter(item => {
+        const shouldKeep = item.id != id;
+        if (!shouldKeep) {
+          URL.revokeObjectURL(item.image);
+        }
+        return shouldKeep;
+      });
+      actions.updateState({ items: newItems });
       actions.persistState();
     },
     removeAll: () => (state, actions) => {
       if (confirm("Remove all items?")) {
+        state.items.forEach(item => URL.revokeObjectURL(item.image));
         actions.updateState({ items: [] });
       } else {
         actions.updateState({});
