@@ -14,6 +14,7 @@
     "parcel-plugin-typescript": "^1.0.0",
     "prettier": "1.13.7",
     "pretty-quick": "^1.6.0",
+    "rimraf": "^2.6.2",
     "styles": "^0.2.1",
     "typescript": "^2.9.2"
   },

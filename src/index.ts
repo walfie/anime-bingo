@@ -2,7 +2,7 @@ import { app } from "hyperapp";
 import { AniListSearch } from "./search";
 import { State, initialState } from "./state";
 import { actions } from "./actions";
-import { view } from "./view";
+import { view } from "./views/main";
 import "./styles/styles.css";
 
 const state =
