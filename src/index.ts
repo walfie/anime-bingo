@@ -17,6 +17,7 @@ const application = app(
 
 application.selections.loadState();
 application.bingo.loadState();
+console.log("https://github.com/walfie/anime-bingo");
 
 (window as any).application = application;
 
