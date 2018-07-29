@@ -19,6 +19,13 @@ export const view: View<State, Actions> = (state, actions) => (
     </div>
 
     <section class="app-search">
+      <fieldset class="app-search__mobile-warning">
+        <legend>Notice</legend>
+        If you're on a mobile device, you might have trouble saving the
+        generated image (there might be no "Save as..." option for canvas
+        elements). It's recommended to do this on a desktop browser.
+      </fieldset>
+
       <fieldset>
         <legend>Search</legend>
         {searchForm(state.search, actions.search)}

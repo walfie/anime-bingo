@@ -18,9 +18,20 @@ body {
   display: flex;
 }
 
+/* Mobile devices may have difficulty saving canvas elements, so display a warning */
+.app-search__mobile-warning {
+  display: none;
+  margin-bottom: 10px;
+  background-color: #ffd0d0;
+}
+
 @media screen and (orientation: portrait) {
   .app-root {
     flex-direction: column;
+  }
+
+  .app-search__mobile-warning {
+    display: block;
   }
 }
 
