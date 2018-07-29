@@ -25,7 +25,7 @@ export namespace State {
     title: string;
     imageUrl: string;
     file: File;
-    error: string;
+    isError: boolean; // Can't really tell what the reason was
   }
 
   export interface Bingo {
@@ -85,7 +85,7 @@ export const initialState: State = {
     title: "",
     imageUrl: null,
     file: null,
-    error: null
+    isError: false
   },
   bingo: State.Bingo.initial
 };

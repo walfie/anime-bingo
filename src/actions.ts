@@ -24,9 +24,7 @@ const validateImageUrl = (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(url);
-    img.onerror = e => {
-      reject(e);
-    };
+    img.onerror = e => reject(e);
     img.src = url;
   });
 };
@@ -244,10 +242,9 @@ export const actions = (search: Search): Actions => ({
     validateFile: file => async (state, actions) => {
       try {
         const url = await validateImageFile(file);
-        actions.updateState({ imageUrl: url, error: null });
+        actions.updateState({ imageUrl: url, isError: false });
       } catch (err) {
-        actions.updateState({ error: "Error loading image" }); // TODO
-        console.error("Failed to load image");
+        actions.updateState({ isError: true });
       }
     },
     validateInput: callback => async (state, actions) => {
@@ -257,7 +254,7 @@ export const actions = (search: Search): Actions => ({
           imageUrl: "",
           title: "",
           file: null,
-          error: null
+          isError: false
         });
         callback({
           id: "custom-" + url,
@@ -266,7 +263,7 @@ export const actions = (search: Search): Actions => ({
           overriddenTitle: null
         });
       } catch (err) {
-        actions.updateState({ error: "Error loading image" }); // TODO
+        actions.updateState({ isError: true });
       }
     }
   },

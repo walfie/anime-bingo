@@ -41,7 +41,8 @@ body {
   max-width: 100%;
 }
 
-.app-search__error {
+.app-search__error,
+.app-custom__error {
   color: #ff0000;
   padding: 0 0 10px 10px;
 }
