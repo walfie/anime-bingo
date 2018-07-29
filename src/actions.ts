@@ -222,7 +222,9 @@ export const actions = (search: Search): Actions => ({
 
       html2canvas(input, {
         allowTaint: true,
-        canvas: output
+        canvas: output,
+        backgroundColor: state.borderColor,
+        scale: Math.max(1, window.devicePixelRatio)
       }).then(_ => {
         actions.showCanvas(true);
       });
