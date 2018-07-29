@@ -38,6 +38,19 @@ export const view: View<State, Actions> = (state, actions) => (
       {selections(state.selections, actions.selections)}
 
       {bingoSettings(state.bingo, actions.bingo)}
+
+      <fieldset class="app-links">
+        <legend>Links</legend>
+        <a href="https://twitter.com/walfieee/status/1023422393744859137">
+          How to use this site
+        </a>
+        ・
+        <a href="https://anilist.co">AniList</a>
+        ・
+        <a href="https://github.com/AniList/ApiV2-GraphQL-Docs">AniList API</a>
+        ・
+        <a href="https://github.com/walfie/anime-bingo">GitHub</a>
+      </fieldset>
     </section>
 
     <section class="app-bingo">

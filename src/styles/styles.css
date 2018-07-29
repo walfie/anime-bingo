@@ -231,3 +231,7 @@ body {
   height: 100%;
   text-align: center;
 }
+
+.app-links {
+  margin-top: 10px;
+}
