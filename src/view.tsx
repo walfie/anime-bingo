@@ -136,6 +136,12 @@ export const selections: View<State.Selections, Actions.Selections> = (
         return (
           <li key={media.id}>
             <div class="app-selections__media">
+              <button
+                class="app-selections__media-delete"
+                onclick={_ => actions.remove(media.id)}
+              >
+                Remove
+              </button>
               <input
                 class="app-selections__media-title"
                 value={media.overriddenTitle}
@@ -152,7 +158,6 @@ export const selections: View<State.Selections, Actions.Selections> = (
               >
                 Reset title
               </button>
-              <button onclick={_ => actions.remove(media.id)}>Remove</button>
             </div>
           </li>
         );
