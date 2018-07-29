@@ -20,10 +20,34 @@ export const loadStorage = (fieldKey: string): any => {
   return JSON.parse(localStorage.getItem(storageKey) || "{}")[fieldKey];
 };
 
+const validateImageUrl = (url: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(url);
+    img.onerror = e => {
+      reject(e);
+    };
+    img.src = url;
+  });
+};
+
+const validateImageFile = async (file: File): Promise<string> => {
+  let img = new Image();
+  const url = URL.createObjectURL(file);
+
+  try {
+    return await validateImageUrl(url);
+  } catch (err) {
+    URL.revokeObjectURL(url);
+    throw err;
+  }
+};
+
 export interface Actions {
   getState: () => (state: State) => ActionResult<State>;
   search: Actions.Search;
   selections: Actions.Selections;
+  custom: Actions.Custom;
   bingo: Actions.Bingo;
 }
 
@@ -81,6 +105,24 @@ export namespace Actions {
       state: State.Selections,
       actions: Actions.Selections
     ) => ActionResult<State.Selections>;
+  }
+
+  export interface Custom {
+    updateState: (
+      newState: Partial<State.Custom>
+    ) => ActionResult<State.Custom>;
+    validateFile: (
+      file: File
+    ) => (
+      state: State.Custom,
+      actions: Actions.Custom
+    ) => Promise<ActionResult<State.Custom>>;
+    validateInput: (
+      callback: ((_: Media) => void)
+    ) => (
+      state: State.Custom,
+      actions: Actions.Custom
+    ) => Promise<ActionResult<State.Custom>>;
   }
 
   export interface Bingo {
@@ -193,6 +235,39 @@ export const actions = (search: Search): Actions => ({
       });
       actions.updateState({ items: state.items });
       actions.persistState();
+    }
+  },
+  custom: {
+    updateState: newState => {
+      return newState;
+    },
+    validateFile: file => async (state, actions) => {
+      try {
+        const url = await validateImageFile(file);
+        actions.updateState({ imageUrl: url, error: null });
+      } catch (err) {
+        actions.updateState({ error: "Error loading image" }); // TODO
+        console.error("Failed to load image");
+      }
+    },
+    validateInput: callback => async (state, actions) => {
+      try {
+        const url = await validateImageUrl(state.imageUrl);
+        actions.updateState({
+          imageUrl: "",
+          title: "",
+          file: null,
+          error: null
+        });
+        callback({
+          id: "custom-" + url,
+          title: state.title,
+          image: url,
+          overriddenTitle: null
+        });
+      } catch (err) {
+        actions.updateState({ error: "Error loading image" }); // TODO
+      }
     }
   },
   bingo: {
