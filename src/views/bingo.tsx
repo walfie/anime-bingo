@@ -170,7 +170,7 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
     </label>
 
     <label class="app-bingo_settings__label">
-      <span>Show site URL in footer</span>
+      <span>Show URL in footer</span>
       <input
         type="checkbox"
         checked={state.showCredit}

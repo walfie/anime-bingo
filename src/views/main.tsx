@@ -4,6 +4,7 @@ import { Actions } from "../actions";
 import { bingoChart, bingoSettings, maxItems } from "./bingo";
 import { searchForm, searchResults } from "./search";
 import { selections } from "./selections";
+import { custom } from "./custom";
 import { MediaType } from "../models";
 
 export const view: View<State, Actions> = (state, actions) => (
@@ -38,6 +39,8 @@ export const view: View<State, Actions> = (state, actions) => (
       </fieldset>
 
       {selections(state.selections, actions.selections)}
+
+      {custom(state, actions)}
 
       {bingoSettings(state.bingo, actions.bingo)}
 

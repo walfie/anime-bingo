@@ -3,6 +3,7 @@ import { Media, MediaId, MediaType } from "./models";
 export interface State {
   search: State.Search;
   selections: State.Selections;
+  custom: State.Custom;
   bingo: State.Bingo;
 }
 
@@ -18,6 +19,13 @@ export namespace State {
 
   export interface Selections {
     items: Media[];
+  }
+
+  export interface Custom {
+    title: string;
+    imageUrl: string;
+    file: File;
+    isError: boolean; // Can't really tell what the reason was
   }
 
   export interface Bingo {
@@ -72,6 +80,12 @@ export const initialState: State = {
   },
   selections: {
     items: []
+  },
+  custom: {
+    title: "",
+    imageUrl: null,
+    file: null,
+    isError: false
   },
   bingo: State.Bingo.initial
 };

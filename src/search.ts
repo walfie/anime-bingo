@@ -43,9 +43,8 @@ export class AniListSearch implements Search {
 
     const json = await result.json();
 
-    // TODO: Catch
     return json.data.page.media.map(media => ({
-      id: mediaType + media.id,
+      id: mediaType + ":" + media.id,
       title: media.title.romaji,
       image: media.coverImage.large
     }));

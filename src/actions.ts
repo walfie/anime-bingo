@@ -20,10 +20,38 @@ export const loadStorage = (fieldKey: string): any => {
   return JSON.parse(localStorage.getItem(storageKey) || "{}")[fieldKey];
 };
 
+const validateImageUrl = (url: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(url);
+    img.onerror = e => reject(e);
+    img.src = url;
+  });
+};
+
+const validateImageFile = async (file: File): Promise<string> => {
+  let img = new Image();
+  const url = URL.createObjectURL(file);
+
+  try {
+    return await validateImageUrl(url);
+  } catch (err) {
+    URL.revokeObjectURL(url);
+    throw err;
+  }
+};
+
+const randomId = (): string => {
+  return Math.random()
+    .toString()
+    .substr(2);
+};
+
 export interface Actions {
   getState: () => (state: State) => ActionResult<State>;
   search: Actions.Search;
   selections: Actions.Selections;
+  custom: Actions.Custom;
   bingo: Actions.Bingo;
 }
 
@@ -81,6 +109,24 @@ export namespace Actions {
       state: State.Selections,
       actions: Actions.Selections
     ) => ActionResult<State.Selections>;
+  }
+
+  export interface Custom {
+    updateState: (
+      newState: Partial<State.Custom>
+    ) => ActionResult<State.Custom>;
+    validateFile: (
+      file: File
+    ) => (
+      state: State.Custom,
+      actions: Actions.Custom
+    ) => Promise<ActionResult<State.Custom>>;
+    validateInput: (
+      callback: ((_: Media) => void)
+    ) => (
+      state: State.Custom,
+      actions: Actions.Custom
+    ) => Promise<ActionResult<State.Custom>>;
   }
 
   export interface Bingo {
@@ -169,11 +215,19 @@ export const actions = (search: Search): Actions => ({
       actions.persistState();
     },
     remove: (id: MediaId) => (state, actions) => {
-      actions.updateState({ items: state.items.filter(item => item.id != id) });
+      const newItems = state.items.filter(item => {
+        const shouldKeep = item.id != id;
+        if (!shouldKeep) {
+          URL.revokeObjectURL(item.image);
+        }
+        return shouldKeep;
+      });
+      actions.updateState({ items: newItems });
       actions.persistState();
     },
     removeAll: () => (state, actions) => {
       if (confirm("Remove all items?")) {
+        state.items.forEach(item => URL.revokeObjectURL(item.image));
         actions.updateState({ items: [] });
       } else {
         actions.updateState({});
@@ -193,6 +247,43 @@ export const actions = (search: Search): Actions => ({
       });
       actions.updateState({ items: state.items });
       actions.persistState();
+    }
+  },
+  custom: {
+    updateState: newState => {
+      if (newState.imageUrl === "") {
+        newState.isError = false;
+      }
+      return newState;
+    },
+    validateFile: file => async (state, actions) => {
+      try {
+        const url = await validateImageFile(file);
+        actions.updateState({ imageUrl: url, isError: false });
+      } catch (err) {
+        actions.updateState({ isError: true });
+      }
+    },
+    validateInput: callback => async (state, actions) => {
+      try {
+        const url = await validateImageUrl(state.imageUrl);
+
+        actions.updateState({
+          imageUrl: "",
+          title: "",
+          file: null,
+          isError: false
+        });
+
+        callback({
+          id: "custom:" + randomId(),
+          title: state.title,
+          image: url,
+          overriddenTitle: null
+        });
+      } catch (err) {
+        actions.updateState({ isError: true });
+      }
     }
   },
   bingo: {
