@@ -41,6 +41,12 @@ const validateImageFile = async (file: File): Promise<string> => {
   }
 };
 
+const randomId = (): string => {
+  return Math.random()
+    .toString()
+    .substr(2);
+};
+
 export interface Actions {
   getState: () => (state: State) => ActionResult<State>;
   search: Actions.Search;
@@ -253,14 +259,16 @@ export const actions = (search: Search): Actions => ({
     validateInput: callback => async (state, actions) => {
       try {
         const url = await validateImageUrl(state.imageUrl);
+
         actions.updateState({
           imageUrl: "",
           title: "",
           file: null,
           isError: false
         });
+
         callback({
-          id: "custom-" + url,
+          id: "custom:" + randomId(),
           title: state.title,
           image: url,
           overriddenTitle: null

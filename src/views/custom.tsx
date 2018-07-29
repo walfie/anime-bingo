@@ -50,9 +50,10 @@ export const custom: View<State, Actions> = (state, actions) => (
           }
         />
         <button
+          type="button"
           onclick={e => {
-            (document.querySelector(".js-file-input") as HTMLElement).click();
             e.preventDefault();
+            (document.querySelector(".js-file-input") as HTMLElement).click();
           }}
         >
           Select local image
