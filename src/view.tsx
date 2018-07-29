@@ -1,7 +1,7 @@
 import { h, View } from "hyperapp";
 import { State } from "./state";
 import { Actions } from "./actions";
-import { bingoChart, bingoSettings } from "./views/bingo";
+import { bingoChart, bingoSettings, maxItems } from "./views/bingo";
 import { MediaType } from "./models";
 
 export const view: View<State, Actions> = (state, actions) => (
@@ -158,6 +158,10 @@ export const selections: View<State.Selections, Actions.Selections> = (
         );
       })}
     </ol>
-    <span>Add items by using the search bar above!</span>
+    <span>
+      {state.items.length > maxItems
+        ? `You have more items than the bingo board can fit! Note that only the first ${maxItems} items will be shown.`
+        : "Add items by using the search bar above!"}
+    </span>
   </fieldset>
 );

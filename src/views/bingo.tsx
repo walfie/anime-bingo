@@ -21,7 +21,7 @@ const cellWidth = 150;
 const cellHeight = 150;
 const cellPadding = 10;
 
-const maxItems = maxRows * maxCols - 1;
+export const maxItems = maxRows * maxCols - 1;
 const middleIndex = Math.floor((maxRows * maxCols) / 2);
 
 export const bingoChart: View<State, Actions> = (state, actions) => {
