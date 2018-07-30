@@ -70,7 +70,7 @@ export class AniListSearch implements Search {
 
     return json.data.page.characters.map(character => ({
       id: "character:" + character.id,
-      title: [character.name.last, character.name.first]
+      title: [character.name.first, character.name.last]
         .filter(Boolean)
         .join(" "),
       image: character.image.large
