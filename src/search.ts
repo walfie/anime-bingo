@@ -1,7 +1,16 @@
 import { Media, MediaType } from "./models";
 
 export interface Search {
-  searchMedia(query: string, mediaType: MediaType): Promise<[Media]>;
+  searchMedia(
+    query: string,
+    mediaType: MediaType,
+    options: SearchOptions
+  ): Promise<[Media]>;
+}
+
+export interface SearchOptions {
+  preferEnglish: boolean;
+  preferSurnameFirst: boolean;
 }
 
 export class AniListSearch implements Search {
@@ -11,7 +20,7 @@ export class AniListSearch implements Search {
       page: Page(page: $page, perPage: $perPage) {
         media: media(search: $search, sort: $sort, type: $type) {
           id
-          title { romaji }
+          title { romaji english }
           coverImage { large }
         }
       }
@@ -41,18 +50,19 @@ export class AniListSearch implements Search {
 
   public async searchMedia(
     query: string,
-    mediaType: MediaType
+    mediaType: MediaType,
+    options: SearchOptions
   ): Promise<[Media]> {
     switch (mediaType) {
       case "anime":
       case "manga":
-        return this.searchAnimeOrManga(query, mediaType);
+        return this.searchAnimeOrManga(query, mediaType, options);
         break;
       case "character":
-        return this.searchCharacter(query);
+        return this.searchCharacter(query, options);
         break;
       case "staff":
-        return this.searchStaff(query);
+        return this.searchStaff(query, options);
         break;
     }
   }
@@ -72,7 +82,22 @@ export class AniListSearch implements Search {
     return await result.json();
   }
 
-  private async searchCharacter(query: string): Promise<[Media]> {
+  private makeName(
+    givenName: string,
+    surname: string,
+    preferSurnameFirst: boolean
+  ): string {
+    const nameParts = preferSurnameFirst
+      ? [surname, givenName]
+      : [givenName, surname];
+
+    return nameParts.filter(Boolean).join(" ");
+  }
+
+  private async searchCharacter(
+    query: string,
+    options: SearchOptions
+  ): Promise<[Media]> {
     let variables = {
       search: query,
       sort: ["SEARCH_MATCH", "FAVOURITES_DESC"]
@@ -82,16 +107,19 @@ export class AniListSearch implements Search {
 
     return json.data.page.characters.map(character => ({
       id: "character:" + character.id,
-      title: [character.name.first, character.name.last]
-        .filter(Boolean)
-        .join(" "),
+      title: this.makeName(
+        character.name.first,
+        character.name.last,
+        options.preferSurnameFirst
+      ),
       image: character.image.large
     }));
   }
 
   private async searchAnimeOrManga(
     query: string,
-    mediaType: MediaType
+    mediaType: MediaType,
+    options: SearchOptions
   ): Promise<[Media]> {
     let variables = {
       search: query,
@@ -101,21 +129,33 @@ export class AniListSearch implements Search {
 
     const json = await this.searchJson(this.mediaQuery, variables);
 
-    return json.data.page.media.map(media => ({
-      id: mediaType + ":" + media.id,
-      title: media.title.romaji,
-      image: media.coverImage.large
-    }));
+    return json.data.page.media.map(media => {
+      const title =
+        (options.preferEnglish && media.title.english) || media.title.romaji;
+
+      return {
+        id: mediaType + ":" + media.id,
+        title,
+        image: media.coverImage.large
+      };
+    });
   }
 
-  private async searchStaff(query: string): Promise<[Media]> {
+  private async searchStaff(
+    query: string,
+    options: SearchOptions
+  ): Promise<[Media]> {
     let variables = { search: query };
 
     const json = await this.searchJson(this.staffQuery, variables);
 
     return json.data.page.staff.map(staff => ({
       id: "staff:" + staff.id,
-      title: [staff.name.first, staff.name.last].filter(Boolean).join(" "),
+      title: this.makeName(
+        staff.name.first,
+        staff.name.last,
+        options.preferSurnameFirst
+      ),
       image: staff.image.large
     }));
   }

@@ -14,32 +14,65 @@ export const searchForm: View<State.Search, Actions.Search> = (
       e.preventDefault();
     }}
   >
-    <select
-      class="app-search__form-media"
-      onchange={e => {
-        actions.updateState({ mediaType: e.target.value });
-        state.query && actions.execute();
-      }}
-    >
-      {["anime", "manga", "character", "staff"].map((mediaType: MediaType) => (
-        <option value={mediaType} selected={state.mediaType == mediaType}>
-          {mediaType}
-        </option>
-      ))}
-    </select>
+    <div class="app-search__form-row">
+      <select
+        class="app-search__form-media"
+        onchange={e => {
+          actions.updateState({ mediaType: e.target.value });
+          state.query && actions.execute();
+        }}
+      >
+        {["anime", "manga", "character", "staff"].map(
+          (mediaType: MediaType) => (
+            <option value={mediaType} selected={state.mediaType == mediaType}>
+              {mediaType}
+            </option>
+          )
+        )}
+      </select>
 
-    <input
-      type="text"
-      class="app-search__form-input"
-      placeholder="Search by title"
-      value={state.query}
-      onfocus={_ => actions.setVisibility(true)}
-      oninput={e => actions.updateQuery(e.target.value)}
-    />
+      <input
+        type="text"
+        class="app-search__form-input"
+        placeholder="Search by title"
+        value={state.query}
+        onfocus={_ => actions.setVisibility(true)}
+        oninput={e => actions.updateQuery(e.target.value)}
+      />
 
-    <button class="app-search__form-button" type="submit">
-      {state.isLoading ? " \u23F3" : "Search"}
-    </button>
+      <button class="app-search__form-button" type="submit">
+        {state.isLoading ? " \u23F3" : "Search"}
+      </button>
+    </div>
+
+    <div class="app-search__form-row app-search__form-row--secondary">
+      {(state.mediaType === "anime" || state.mediaType === "manga") && (
+        <label>
+          <input
+            type="checkbox"
+            checked={state.preferEnglish}
+            onchange={e => {
+              actions.updateState({ preferEnglish: e.target.checked });
+              state.query && actions.execute();
+            }}
+          />
+          Prefer English title
+        </label>
+      )}
+      {(state.mediaType === "character" || state.mediaType === "staff") && (
+        <label>
+          <input
+            type="checkbox"
+            checked={state.preferSurnameFirst}
+            onchange={e => {
+              actions.updateState({ preferSurnameFirst: e.target.checked });
+              state.query && actions.execute();
+            }}
+          />
+          Eastern name order (surname first)
+        </label>
+      )}
+    </div>
   </form>
 );
 

@@ -184,7 +184,8 @@ export const actions = (search: Search): Actions => ({
       try {
         const searchResults = await search.searchMedia(
           state.query,
-          state.mediaType
+          state.mediaType,
+          state
         );
         actions.updateMatches(searchResults);
         actions.setVisibility(true);
