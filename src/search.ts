@@ -10,6 +10,7 @@ export interface Search {
 
 export interface SearchOptions {
   preferEnglish: boolean;
+  preferSurnameFirst: boolean;
 }
 
 export class AniListSearch implements Search {
@@ -58,10 +59,10 @@ export class AniListSearch implements Search {
         return this.searchAnimeOrManga(query, mediaType, options);
         break;
       case "character":
-        return this.searchCharacter(query);
+        return this.searchCharacter(query, options);
         break;
       case "staff":
-        return this.searchStaff(query);
+        return this.searchStaff(query, options);
         break;
     }
   }
@@ -81,7 +82,22 @@ export class AniListSearch implements Search {
     return await result.json();
   }
 
-  private async searchCharacter(query: string): Promise<[Media]> {
+  private makeName(
+    givenName: string,
+    surname: string,
+    preferSurnameFirst: boolean
+  ): string {
+    const nameParts = preferSurnameFirst
+      ? [surname, givenName]
+      : [givenName, surname];
+
+    return nameParts.filter(Boolean).join(" ");
+  }
+
+  private async searchCharacter(
+    query: string,
+    options: SearchOptions
+  ): Promise<[Media]> {
     let variables = {
       search: query,
       sort: ["SEARCH_MATCH", "FAVOURITES_DESC"]
@@ -91,9 +107,11 @@ export class AniListSearch implements Search {
 
     return json.data.page.characters.map(character => ({
       id: "character:" + character.id,
-      title: [character.name.first, character.name.last]
-        .filter(Boolean)
-        .join(" "),
+      title: this.makeName(
+        character.name.first,
+        character.name.last,
+        options.preferSurnameFirst
+      ),
       image: character.image.large
     }));
   }
@@ -123,14 +141,21 @@ export class AniListSearch implements Search {
     });
   }
 
-  private async searchStaff(query: string): Promise<[Media]> {
+  private async searchStaff(
+    query: string,
+    options: SearchOptions
+  ): Promise<[Media]> {
     let variables = { search: query };
 
     const json = await this.searchJson(this.staffQuery, variables);
 
     return json.data.page.staff.map(staff => ({
       id: "staff:" + staff.id,
-      title: [staff.name.first, staff.name.last].filter(Boolean).join(" "),
+      title: this.makeName(
+        staff.name.first,
+        staff.name.last,
+        options.preferSurnameFirst
+      ),
       image: staff.image.large
     }));
   }

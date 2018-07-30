@@ -59,6 +59,19 @@ export const searchForm: View<State.Search, Actions.Search> = (
           Prefer English title
         </label>
       )}
+      {(state.mediaType === "character" || state.mediaType === "staff") && (
+        <label>
+          <input
+            type="checkbox"
+            checked={state.preferSurnameFirst}
+            onchange={e => {
+              actions.updateState({ preferSurnameFirst: e.target.checked });
+              state.query && actions.execute();
+            }}
+          />
+          Eastern name order (surname first)
+        </label>
+      )}
     </div>
   </form>
 );

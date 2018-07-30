@@ -185,7 +185,7 @@ export const actions = (search: Search): Actions => ({
         const searchResults = await search.searchMedia(
           state.query,
           state.mediaType,
-          { preferEnglish: state.preferEnglish }
+          state
         );
         actions.updateMatches(searchResults);
         actions.setVisibility(true);

@@ -16,6 +16,7 @@ export namespace State {
     isLoading: boolean;
     error: string;
     preferEnglish: boolean;
+    preferSurnameFirst: boolean;
   }
 
   export interface Selections {
@@ -79,7 +80,8 @@ export const initialState: State = {
     isVisible: false,
     isLoading: false,
     error: null,
-    preferEnglish: false
+    preferEnglish: false,
+    preferSurnameFirst: false
   },
   selections: {
     items: []
