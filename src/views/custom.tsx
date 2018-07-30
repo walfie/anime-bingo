@@ -15,7 +15,9 @@ const errorMessage = (state: State.Custom): string => {
 };
 
 export const custom: View<State, Actions> = (state, actions) => (
-  <fieldset class="app-custom">
+  <fieldset
+    class={"app-custom " + (state.custom.isDragging ? "app-custom--drag" : "")}
+  >
     <legend>Custom</legend>
     <form
       onsubmit={e => {

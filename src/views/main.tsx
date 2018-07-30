@@ -7,8 +7,31 @@ import { selections } from "./selections";
 import { custom } from "./custom";
 import { MediaType } from "../models";
 
+// Used to detect drag/drop of files
+let lastDragTarget = null;
+
 export const view: View<State, Actions> = (state, actions) => (
-  <main class="app-root">
+  <main
+    class="app-root"
+    ondragenter={e => {
+      e.preventDefault();
+      lastDragTarget = e.target;
+      actions.custom.updateState({ isDragging: true });
+    }}
+    ondragleave={e => {
+      e.preventDefault();
+      if (e.target === lastDragTarget || e.target === document) {
+        actions.custom.updateState({ isDragging: false });
+      }
+    }}
+    ondragover={e => e.preventDefault()}
+    ondrop={e => {
+      e.preventDefault();
+      const file = (e.dataTransfer.items || [])[0];
+      actions.custom.updateState({ isDragging: false });
+      actions.custom.validateFile(file.getAsFile());
+    }}
+  >
     <div
       class="app-overlay"
       style={{ display: state.bingo.showCanvas ? "block" : "none" }}

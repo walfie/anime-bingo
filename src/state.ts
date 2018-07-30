@@ -26,6 +26,7 @@ export namespace State {
     imageUrl: string;
     file: File;
     isError: boolean; // Can't really tell what the reason was
+    isDragging: boolean;
   }
 
   export interface Bingo {
@@ -85,7 +86,8 @@ export const initialState: State = {
     title: "",
     imageUrl: null,
     file: null,
-    isError: false
+    isError: false,
+    isDragging: false
   },
   bingo: State.Bingo.initial
 };

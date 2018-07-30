@@ -141,6 +141,10 @@ body {
   margin-right: 10px;
 }
 
+.app-custom--drag {
+  background-color: #c3f9ff;
+}
+
 .app-custom__input {
   flex: 1;
 }
