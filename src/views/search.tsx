@@ -21,7 +21,7 @@ export const searchForm: View<State.Search, Actions.Search> = (
         state.query && actions.execute();
       }}
     >
-      {["anime", "manga"].map((mediaType: MediaType) => (
+      {["anime", "manga", "character"].map((mediaType: MediaType) => (
         <option value={mediaType} selected={state.mediaType == mediaType}>
           {mediaType}
         </option>
