@@ -47,9 +47,13 @@ body {
   padding: 0 0 10px 10px;
 }
 
-.app-search__form {
+.app-search__form-row {
   display: flex;
   padding-bottom: 10px;
+}
+
+.app-search__form-row--secondary {
+  justify-content: flex-end;
 }
 
 .app-search__form-input {

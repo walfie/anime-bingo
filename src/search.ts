@@ -1,7 +1,15 @@
 import { Media, MediaType } from "./models";
 
 export interface Search {
-  searchMedia(query: string, mediaType: MediaType): Promise<[Media]>;
+  searchMedia(
+    query: string,
+    mediaType: MediaType,
+    options: SearchOptions
+  ): Promise<[Media]>;
+}
+
+export interface SearchOptions {
+  preferEnglish: boolean;
 }
 
 export class AniListSearch implements Search {
@@ -11,7 +19,7 @@ export class AniListSearch implements Search {
       page: Page(page: $page, perPage: $perPage) {
         media: media(search: $search, sort: $sort, type: $type) {
           id
-          title { romaji }
+          title { romaji english }
           coverImage { large }
         }
       }
@@ -41,12 +49,13 @@ export class AniListSearch implements Search {
 
   public async searchMedia(
     query: string,
-    mediaType: MediaType
+    mediaType: MediaType,
+    options: SearchOptions
   ): Promise<[Media]> {
     switch (mediaType) {
       case "anime":
       case "manga":
-        return this.searchAnimeOrManga(query, mediaType);
+        return this.searchAnimeOrManga(query, mediaType, options);
         break;
       case "character":
         return this.searchCharacter(query);
@@ -91,7 +100,8 @@ export class AniListSearch implements Search {
 
   private async searchAnimeOrManga(
     query: string,
-    mediaType: MediaType
+    mediaType: MediaType,
+    options: SearchOptions
   ): Promise<[Media]> {
     let variables = {
       search: query,
@@ -101,11 +111,16 @@ export class AniListSearch implements Search {
 
     const json = await this.searchJson(this.mediaQuery, variables);
 
-    return json.data.page.media.map(media => ({
-      id: mediaType + ":" + media.id,
-      title: media.title.romaji,
-      image: media.coverImage.large
-    }));
+    return json.data.page.media.map(media => {
+      const title =
+        (options.preferEnglish && media.title.english) || media.title.romaji;
+
+      return {
+        id: mediaType + ":" + media.id,
+        title,
+        image: media.coverImage.large
+      };
+    });
   }
 
   private async searchStaff(query: string): Promise<[Media]> {

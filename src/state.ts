@@ -15,6 +15,7 @@ export namespace State {
     isVisible: boolean;
     isLoading: boolean;
     error: string;
+    preferEnglish: boolean;
   }
 
   export interface Selections {
@@ -77,7 +78,8 @@ export const initialState: State = {
     mediaType: "anime",
     isVisible: false,
     isLoading: false,
-    error: null
+    error: null,
+    preferEnglish: false
   },
   selections: {
     items: []
