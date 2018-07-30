@@ -28,6 +28,17 @@ export class AniListSearch implements Search {
       }
     }`;
 
+  private staffQuery: string = `
+    query ($page: Int = 1, $perPage: Int = 10, $search: String) {
+      page: Page(page: $page, perPage: $perPage) {
+        staff: staff(search: $search) {
+          id
+          name { first last }
+          image { large }
+        }
+      }
+    }`;
+
   public async searchMedia(
     query: string,
     mediaType: MediaType
@@ -39,6 +50,9 @@ export class AniListSearch implements Search {
         break;
       case "character":
         return this.searchCharacter(query);
+        break;
+      case "staff":
+        return this.searchStaff(query);
         break;
     }
   }
@@ -60,8 +74,6 @@ export class AniListSearch implements Search {
 
   private async searchCharacter(query: string): Promise<[Media]> {
     let variables = {
-      page: 1,
-      perPage: 10,
       search: query,
       sort: ["SEARCH_MATCH", "FAVOURITES_DESC"]
     };
@@ -82,8 +94,6 @@ export class AniListSearch implements Search {
     mediaType: MediaType
   ): Promise<[Media]> {
     let variables = {
-      page: 1,
-      perPage: 10,
       search: query,
       type: mediaType.toUpperCase(),
       sort: ["POPULARITY_DESC", "SEARCH_MATCH"]
@@ -95,6 +105,18 @@ export class AniListSearch implements Search {
       id: mediaType + ":" + media.id,
       title: media.title.romaji,
       image: media.coverImage.large
+    }));
+  }
+
+  private async searchStaff(query: string): Promise<[Media]> {
+    let variables = { search: query };
+
+    const json = await this.searchJson(this.staffQuery, variables);
+
+    return json.data.page.staff.map(staff => ({
+      id: "staff:" + staff.id,
+      title: [staff.name.first, staff.name.last].filter(Boolean).join(" "),
+      image: staff.image.large
     }));
   }
 }
