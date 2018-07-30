@@ -39,6 +39,10 @@ export const view: View<State, Actions> = (state, actions) => (
     >
       <div class="app-overlay__content">
         <div>To save, right-click + "Save Image As..."</div>
+        <div>
+          (Not available on all browsers, but known to work in Chrome and
+          Firefox)
+        </div>
         <canvas class="js-bingo-output-canvas app-bingo__canvas" />
         <div>Click anywhere to exit.</div>
       </div>
@@ -49,7 +53,8 @@ export const view: View<State, Actions> = (state, actions) => (
         <legend>Notice</legend>
         If you're on a mobile device, you might have trouble saving the
         generated image (there might be no "Save as..." option for canvas
-        elements). It's recommended to do this on a desktop browser.
+        elements). It's recommended to use a desktop browser such as Chrome or
+        Firefox.
       </fieldset>
 
       <fieldset>
