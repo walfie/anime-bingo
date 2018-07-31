@@ -228,8 +228,7 @@ body {
   display: inline-block;
   padding: 5px;
   overflow-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
+  max-width: 140px;
 }
 
 .app-overlay {
