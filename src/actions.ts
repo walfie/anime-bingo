@@ -30,7 +30,6 @@ const validateImageUrl = (url: string): Promise<string> => {
 };
 
 const validateImageFile = async (file: File): Promise<string> => {
-  let img = new Image();
   const url = URL.createObjectURL(file);
 
   try {
