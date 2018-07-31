@@ -1,7 +1,7 @@
 import { h, View } from "hyperapp";
 import { State } from "../state";
 import { Actions } from "../actions";
-import { bingoChart, bingoSettings, maxItems } from "./bingo";
+import { bingoChart, bingoSettings } from "./bingo";
 import { searchForm, searchResults } from "./search";
 import { selections } from "./selections";
 import { custom } from "./custom";
@@ -66,7 +66,7 @@ export const view: View<State, Actions> = (state, actions) => (
         {searchResults(state, actions)}
       </fieldset>
 
-      {selections(state.selections, actions.selections)}
+      {selections(state, actions.selections)}
 
       {custom(state, actions)}
 

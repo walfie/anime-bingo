@@ -39,6 +39,8 @@ export namespace State {
     showTitles: boolean;
     showCanvas: boolean;
     showCredit: boolean;
+    showFreeSpace: boolean;
+    size: number;
   }
 
   export namespace Bingo {
@@ -67,7 +69,9 @@ export namespace State {
       borderColor: "#333333",
       showTitles: true,
       showCanvas: false,
-      showCredit: true
+      showCredit: true,
+      showFreeSpace: true,
+      size: 5
     };
   }
 }

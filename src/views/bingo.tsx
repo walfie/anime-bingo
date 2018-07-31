@@ -15,22 +15,34 @@ const chunkArray = <T extends {}>(array: T[], chunkSize: number): T[][] => {
   return arrays;
 };
 
-const maxRows = 5;
-const maxCols = 5;
-const cellWidth = 150;
-const cellHeight = 150;
-const cellPadding = 10;
-
-export const maxItems = maxRows * maxCols - 1;
-const middleIndex = Math.floor((maxRows * maxCols) / 2);
+export const calculateMaxItems = (
+  size: number,
+  showFreeSpace: boolean
+): number => {
+  const freeSpaceExists = showFreeSpace && size % 2 != 0;
+  return size * size - (freeSpaceExists ? 1 : 0);
+};
 
 export const bingoChart: View<State, Actions> = (state, actions) => {
+  const maxItems = calculateMaxItems(
+    state.bingo.size,
+    state.bingo.showFreeSpace
+  );
+
+  // Don't show a free space if the size is an even number
+  // TODO: Dedupe this math logic somewhere
+  const middleIndex: number | null =
+    state.bingo.showFreeSpace && state.bingo.size % 2 != 0
+      ? Math.floor((state.bingo.size * state.bingo.size) / 2)
+      : null;
+
   // Take the first x items in the items array
   const selectedItems = state.selections.items.slice(0, maxItems);
 
   const items = new Array(maxItems).fill(null);
   items.splice(0, selectedItems.length, ...selectedItems);
-  items.splice(middleIndex, 0, null);
+
+  middleIndex && items.splice(middleIndex, 0, null);
 
   const cells = items.map((item, index) => {
     let inner = [];
@@ -48,7 +60,7 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
         ...style,
         backgroundImage: `url(${item.image})`
       };
-    } else if (index == middleIndex) {
+    } else if (index === middleIndex) {
       style = {
         ...style,
         color: state.bingo.backgroundColor,
@@ -93,12 +105,16 @@ export const bingoChart: View<State, Actions> = (state, actions) => {
     >
       <table class="app-bingo__table" style={tableStyles}>
         <thead>
-          <th class="app-bingo__header" style={headerStyles} colSpan={maxCols}>
+          <th
+            class="app-bingo__header"
+            style={headerStyles}
+            colSpan={state.bingo.size}
+          >
             {state.bingo.title}
           </th>
         </thead>
         <tbody>
-          {chunkArray(cells, maxRows).map(rowItems => (
+          {chunkArray(cells, state.bingo.size).map(rowItems => (
             <tr class="app-bingo__row">{rowItems}</tr>
           ))}
         </tbody>
@@ -124,6 +140,22 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
         value={state.title}
         oninput={e => actions.updateAndPersistState({ title: e.target.value })}
       />
+    </label>
+
+    <label class="app-bingo_settings__label">
+      <span>Size</span>
+      <select
+        onchange={e =>
+          actions.updateAndPersistState({ size: parseInt(e.target.value) })
+        }
+        value={state.size}
+      >
+        {[3, 4, 5, 6, 7].map(size => (
+          <option value={size}>
+            {size} x {size}
+          </option>
+        ))}
+      </select>
     </label>
 
     <label class="app-bingo_settings__label">
@@ -159,7 +191,7 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
     </label>
 
     <label class="app-bingo_settings__label">
-      <span>Show series title</span>
+      <span>Show titles/names</span>
       <input
         type="checkbox"
         checked={state.showTitles}
@@ -176,6 +208,17 @@ export const bingoSettings: View<State.Bingo, Actions.Bingo> = (
         checked={state.showCredit}
         onchange={e =>
           actions.updateAndPersistState({ showCredit: e.target.checked })
+        }
+      />
+    </label>
+
+    <label class="app-bingo_settings__label">
+      <span>Show free space</span>
+      <input
+        type="checkbox"
+        checked={state.showFreeSpace}
+        onchange={e =>
+          actions.updateAndPersistState({ showFreeSpace: e.target.checked })
         }
       />
     </label>
