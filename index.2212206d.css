@@ -1,0 +1,248 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+*, :before, :after {
+  box-sizing: inherit;
+}
+
+.app-root {
+  width: 100%;
+  display: flex;
+}
+
+.app-search__mobile-warning {
+  background-color: #ffd0d0;
+  margin-bottom: 10px;
+  display: none;
+}
+
+@media screen and (orientation: portrait) {
+  .app-root {
+    flex-direction: column;
+  }
+
+  .app-search__mobile-warning {
+    display: block;
+  }
+}
+
+.app-search {
+  flex: 1;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.app-search__error, .app-custom__error {
+  color: red;
+  padding: 0 0 10px 10px;
+}
+
+.app-search__form-row {
+  padding-bottom: 10px;
+  display: flex;
+}
+
+.app-search__form-row--secondary {
+  justify-content: flex-end;
+}
+
+.app-search__form-input {
+  vertical-align: middle;
+  flex: 1;
+  font-size: 20px;
+}
+
+.app-search__form-button {
+  width: 60px;
+  margin-left: 5px;
+  font-size: 18px;
+}
+
+.app-search__form-media {
+  margin-right: 5px;
+  font-size: 16px;
+}
+
+.app-search__results {
+  max-height: 500px;
+  padding-left: 5px;
+  overflow-y: scroll;
+}
+
+.app-search__result {
+  cursor: pointer;
+  border-top: 1px dotted #aaa;
+  align-items: flex-start;
+  list-style-type: none;
+  display: flex;
+}
+
+.app-search__result:hover {
+  background-color: #0000001a;
+}
+
+.app-search__result-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 80px;
+  height: 100px;
+  margin: 5px;
+}
+
+.app-search__result-title {
+  flex: 1;
+  align-self: center;
+  font-size: 1.2em;
+}
+
+.app-selections_container {
+  margin-top: 10px;
+}
+
+.app-selections {
+  padding-left: 20px;
+}
+
+.app-selections__media {
+  padding-bottom: 5px;
+  display: flex;
+}
+
+.app-selections__media-delete {
+  margin-right: 4px;
+}
+
+.app-selections__media-title {
+  flex: 1;
+  margin-right: 3px;
+  padding-left: 3px;
+}
+
+.app-custom, .app-bingo_settings {
+  margin-top: 10px;
+}
+
+.app-bingo_settings__label, .app-custom__label {
+  padding-bottom: 8px;
+  display: flex;
+}
+
+.app-bingo_settings__label > span, .app-custom__label > span {
+  margin-right: 10px;
+}
+
+.app-custom--drag {
+  background-color: #c3f9ff;
+}
+
+.app-custom__input {
+  flex: 1;
+}
+
+.app-custom__explanation {
+  font-size: .8em;
+}
+
+.app-bingo {
+  text-align: center;
+  flex: 2;
+  padding: 10px;
+  overflow: scroll;
+}
+
+.app-bingo__generate {
+  margin-bottom: 10px;
+}
+
+.app-bingo__generate-button {
+  font-size: 20px;
+}
+
+.app-bingo__canvas {
+  max-width: 90%;
+  max-height: 85%;
+  padding: 10px;
+  width: auto !important;
+  height: auto !important;
+}
+
+.app-bingo__container {
+  display: inline-block;
+}
+
+.app-bingo__table {
+  border-spacing: 6px;
+}
+
+.app-bingo__header {
+  width: 1px;
+  padding: 5px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.app-bingo__credit {
+  text-align: right;
+  padding-bottom: 2px;
+  padding-right: 5px;
+}
+
+.app-bingo__cell {
+  vertical-align: bottom;
+  text-align: center;
+  box-sizing: border-box;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 150px;
+  min-width: 150px;
+  height: 200px;
+  padding: 10px;
+  display: table-cell;
+}
+
+.app-bingo__cell-free {
+  font-size: 30px;
+}
+
+.app-bingo__cell-text {
+  color: #fff;
+  overflow-wrap: break-word;
+  background: #00000080;
+  border-radius: 20px;
+  max-width: 140px;
+  padding: 5px;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.app-overlay {
+  z-index: 1;
+  color: #fff;
+  background-color: #000c;
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+}
+
+.app-overlay__content {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.app-links {
+  margin-top: 10px;
+}
+/*# sourceMappingURL=index.2212206d.css.map */
