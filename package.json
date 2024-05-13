@@ -1,7 +1,6 @@
 {
   "name": "anime-bingo",
   "version": "1.0.0",
-  "main": "src/index.js",
   "license": "MIT",
   "devDependencies": {
     "@types/html2canvas": "^0.0.33",
@@ -10,8 +9,7 @@
     "gh-pages": "^1.2.0",
     "grunt": "~0.4.0",
     "husky": "^0.14.3",
-    "parcel-bundler": "^1.9.7",
-    "parcel-plugin-typescript": "^1.0.0",
+    "parcel": "^2.12.0",
     "prettier": "1.13.7",
     "pretty-quick": "^1.6.0",
     "rimraf": "^2.6.2",

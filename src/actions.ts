@@ -108,6 +108,12 @@ export namespace Actions {
       state: State.Selections,
       actions: Actions.Selections
     ) => ActionResult<State.Selections>;
+    move: (
+      _: { srcIndex; offset }
+    ) => (
+      state: State.Selections,
+      actions: Actions.Selections
+    ) => ActionResult<State.Selections>;
   }
 
   export interface Custom {
@@ -245,6 +251,18 @@ export const actions = (search: Search): Actions => ({
           item.overriddenTitle = title;
         }
       });
+      actions.updateState({ items: state.items });
+      actions.persistState();
+    },
+    move: ({ srcIndex, offset }) => (state, actions) => {
+      const destIndex = srcIndex + offset;
+      if (destIndex < 0 || destIndex >= state.items.length) {
+        return;
+      }
+
+      const element = state.items[srcIndex];
+      state.items.splice(srcIndex, 1);
+      state.items.splice(destIndex, 0, element);
       actions.updateState({ items: state.items });
       actions.persistState();
     }

@@ -1,5 +1,6 @@
 *.log
 .cache
+.parcel-cache
 dist
 log
 node_modules

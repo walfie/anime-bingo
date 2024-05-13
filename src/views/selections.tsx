@@ -21,7 +21,7 @@ export const selections: View<State, Actions.Selections> = (state, actions) => {
         <div>No items selected.</div>
       )}
       <ol class="app-selections">
-        {state.selections.items.map(media => {
+        {state.selections.items.map((media, index) => {
           return (
             <li key={media.id}>
               <div class="app-selections__media">
@@ -48,6 +48,20 @@ export const selections: View<State, Actions.Selections> = (state, actions) => {
                   }
                 >
                   Reset title
+                </button>
+                <button
+                  class="app-selections__media-reorder"
+                  disabled={index == 0}
+                  onclick={_ => actions.move({ srcIndex: index, offset: -1 })}
+                >
+                  ▲
+                </button>
+                <button
+                  class="app-selections__media-reorder"
+                  disabled={index == state.selections.items.length - 1}
+                  onclick={_ => actions.move({ srcIndex: index, offset: 1 })}
+                >
+                  ▼
                 </button>
               </div>
             </li>

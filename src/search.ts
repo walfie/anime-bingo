@@ -124,7 +124,7 @@ export class AniListSearch implements Search {
     let variables = {
       search: query,
       type: mediaType.toUpperCase(),
-      sort: ["POPULARITY_DESC", "SEARCH_MATCH"]
+      sort: ["SEARCH_MATCH", "POPULARITY_DESC"]
     };
 
     const json = await this.searchJson(this.mediaQuery, variables);
